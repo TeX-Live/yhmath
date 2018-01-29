@@ -1,0 +1,4403 @@
+% \iffalse meta-comment
+% yhmath.dtx
+% 
+% originally written by Yannis Haralambous, extended by Norbert Preining
+% in 2013. See pdf for details.
+%
+% \fi
+%
+% \iffalse
+%
+%<*dtx>
+          \ProvidesFile{yhmath.dtx}
+%</dtx>
+%<package>\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+%<package>\ProvidesPackage{yhmath}
+%<driver> \ProvidesFile{yhmath.drv}
+%<fdfile> \ProvidesFile{OMXyhex.fd}
+% \fi
+%         \ProvidesFile{yhmath.dtx}
+%
+%
+% \iffalse
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage{amsmath,yhmath}
+\begin{document}
+  \DocInput{yhmath.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% \GetFileInfo{yhmath.dtx}
+%
+% \def\fileversion{1.1}
+% \def\filedate{2013/07/04}
+%
+% \title{My humble additions to (La)\TeX{} mathematics\thanks{This file is
+%          \fileversion, last revised \filedate.}}
+% \author{Yannis Haralambous\thanks{Address: 187, rue Nationale,
+%          59800 Lille, France}\\
+%           \texttt{\small haralambous@univ-lille1.fr}}
+% \date{January 4, 1996; adaptions NP July 3, 2013}
+% \maketitle
+%
+% \CheckSum{107}
+%
+% \changes{v1.0}{1996/01/04}{First version}
+% \changes{v1.1}{2013/07/04}{Merge type1 and metafont packages (NP)}
+%
+% \begin{abstract}
+% This package provides a set of big delimiters, intermediate to those
+% of the original \TeX{}, and also much bigger. It also provides very
+% wide accents (including two new ones: parenthesis and triangle). These
+% symbols are included in a font provided both in Metafont and PostScript
+% which has Don's \texttt{cmex10} as lower ASCII part. 
+% \end{abstract}
+%
+% \section{Installation}
+%
+% This package consists of (a) a font, written in PostScript, (b) the
+% same font written in Metafont, (c) a \LaTeX{} style file, (d) a FD 
+% file for the OMX encoding using the new font,
+% (e) a virtual font that uses cmex font for the lower 128 positions.
+%
+% In case you obtained the package via one of the distributions, no
+% further steps should be necessary. If you downloaded the files from
+% CTAN, all the files have to be installed into their respective places
+% within the TDS hierarchy.
+%
+% \section{About Changes in v1.1}
+%
+% Yannis first released the Metafont version of the font in 1996, and
+% later added the PostScript version in 2002. These two packages ended
+% up in two different directories on CTAN, creating confusion.
+% In 2013, after a discussion on the TeX Live mailing list, we decided
+% to merge the two packages into one. 
+%
+% We change the direction and generation in this release. The original dtx
+% file created the Metafont source as \texttt{yhcmex10.mf}, which was then
+% copied to \texttt{yrcmex10.mf}. We changed this to directly generate 
+% \texttt{yrcmex10.mf}.
+%
+% Furthermore, the virtual font provided originally by Yannis had a small
+% bug with respect to big delimiters (small empty space in the middle),
+% which was fixed by Akira Kakuto.
+%
+% Another bug concerning the DeclareFontFamily declaration was reported
+% and fixed by Kazuhiro Okuma.
+%
+% Norbert Preining merged the various sources, adapted the documentation,
+% and uploaded the new package to CTAN.
+%
+% \section{Availability}
+%
+% Don Knuth's code is included in Metafont files, so this code is under
+% the usual \TeX ware \copyright opyright conditions. My code is
+% postcard-ware (if you like it and find it is worth  a postcard + a stamp +
+% the mental effort of writing a word [optional!] and the physical effort
+% of going to the nearest mailbox, then do it!).
+%
+% Everything is on CTAN, and if there are upgrades you will be informed
+% in the usual way. 
+%
+% \section{Very big delimiters}
+% I never liked those parentheses of matrices which become almost
+% immediately straight. In traditional math typography, parentheses stay
+% curved, even if they are very big. So I decided to play around with \TeX's
+% \texttt{charlist} font property, and make some more of those big delimiters.
+% I also did intermediate sizes (for all ``big'' delimiters). Here are some
+% examples :
+% 
+% \begin{gather}
+% \begin{pmatrix} a & b\\ c & d\end{pmatrix}
+% \begin{pmatrix} a & b & c\\ d & e & f\\ g & h & i\end{pmatrix}
+% \begin{pmatrix} a & b & c & d\\ e & f & g & h\\ i & j & k & l\\
+% m & n & o & p\end{pmatrix}
+% \\
+% \begin{pmatrix} a & b & c & d & e\\ f & g & h & i & j\\
+% k & l & m & n & o\\ p & q & r & s & t\\ u & v & w & x & y\end{pmatrix}
+% \begin{pmatrix} a & b & c & d & e & f \\ g & h & i & j & k & l \\
+% m & n & o & p & q & r \\ s & t & u & v & w & x \\ y & z & \alpha &
+% \beta & \gamma & \delta\end{pmatrix}
+% \end{gather}
+%
+% 
+% \section{A new \AmS-\LaTeX{}-like matrice-like environnement}
+% 
+% Since I did also ``very big'' versions of the ``left angle'' and ``right
+% angle'' symbols, why not making ``matrices'' with them as delimiters?
+% I have never seen such a mathematical object, but perhaps was it just
+% because this constructions wasn't available yet? (this is a chicken and egg
+% story).
+% 
+% \DescribeMacro{amatrix}
+% I called this new \AmS-\LaTeX-like environment \texttt{amatrix} (``a'' for
+% ``angle'').
+% I hope AMS people will just love it and include it into 
+% \AmS-\LaTeX!\footnote{Talking of \AmS-\LaTeX{} there are a few more macros
+% I would like to see included, see next section.}
+% 
+% Here are the same matrices as above, with angles instead of parentheses:
+% 
+% \begin{gather}
+% \begin{amatrix} a & b\\ c & d\end{amatrix}
+% \begin{amatrix} a & b & c\\ d & e & f\\ g & h & i\end{amatrix}
+% \begin{amatrix} a & b & c & d\\ e & f & g & h\\ i & j & k & l\\
+% m & n & o & p\end{amatrix}
+% \\
+% \begin{amatrix} a & b & c & d & e\\ f & g & h & i & j\\
+% k & l & m & n & o\\ p & q & r & s & t\\ u & v & w & x & y\end{amatrix}
+% \begin{amatrix} a & b & c & d & e & f \\ g & h & i & j & k & l \\
+% m & n & o & p & q & r \\ s & t & u & v & w & x \\ y & z & \alpha &
+% \beta & \gamma & \delta\end{amatrix}
+% \end{gather}
+% 
+% \section{New roots}
+%
+% Roots got bigger as well, so that now the ``vertical root'' comes
+% much later. Example :
+%
+% $$
+% \sqrt{\sqrt{\sqrt{\sqrt{\sqrt{\sqrt{\sqrt{\sqrt{%
+% \sqrt{\sqrt{\sqrt{\sqrt{\sqrt x}}}}}}}}}}}}
+% $$
+% 
+% \section{A few things missing from \AmS-\LaTeX{} v1.2}
+% 
+% \DescribeMacro{\adots}
+% In \AmS-\LaTeX{} there is a |\ddots| command for diagonal dots. How about
+% antidiagonal ones? There are matrices called anti-symmetric, and for
+% them we need the notation ``dots going up''. I define a |\adots| macro,
+% with a code symetric to |\ddots|, here is the result: $\adots$.
+% 
+% \DescribeMacro{\ring}
+% Another thing missing in all \TeX{} \& Co. packages: the ring accent,
+% used in topology for the interior of a space. I define a macro |\ring|
+% to be used in math mode. Here is the result: if $X=[0,1]$ then 
+% $\ring{X}=]0,1[$.
+% 
+% \section{Very wide accents}
+% 
+% \DescribeMacro{\widetriangle}\DescribeMacro{\wideparen}
+% I added some more hats and tildes, so that you can get really
+% wide accents now; see the examples below:
+% 
+% $$
+% \widehat{A}, 
+% \widehat{AB},
+% \widehat{ABC},
+% \widehat{ABCD},
+% \widehat{ABCDE},
+% \widehat{ABCDEF},
+% \widehat{ABCDEFG}
+% $$
+% 
+% $$
+% \widetilde{A}, 
+% \widetilde{AB},
+% \widetilde{ABC},
+% \widetilde{ABCD},
+% \widetilde{ABCDE},
+% \widetilde{ABCDEF},
+% \widetilde{ABCDEFG}
+% $$
+% 
+% I also designed two new
+% accents: the triangle accent |\widetriangle| and the parenthesis accent
+% |\wideparen|:
+% 
+% $$
+% \widetriangle{A}, 
+% \widetriangle{AB},
+% \widetriangle{ABC},
+% \widetriangle{ABCD},
+% \widetriangle{ABCDE},
+% \widetriangle{ABCDEF},
+% \widetriangle{ABCDEFG}
+% $$
+% 
+% $$
+% \wideparen{A}, 
+% \wideparen{AB},
+% \wideparen{ABC},
+% \wideparen{ABCD},
+% \wideparen{ABCDE},
+% \wideparen{ABCDEF},
+% \wideparen{ABCDEFG}
+% $$
+% 
+% 
+% 
+% The former is used (in France only??) to show that the notation $ABC$,
+% where $A,B,C$ are three points, means a triangle and not an angle.
+% See what I mean? $\widetriangle{ABC}$ is a triangle, $\widehat{ABC}$
+% is an angle.
+% 
+% The latter is used when we want a non-expansible accent to be applied
+% to more than one letters at once. Of course \AmS-\LaTeX{} has given a
+% solution to this (place the symbols between parentheses and the accent
+% as an exponent of the right parenthesis), by I happen not to like that
+% solution. For example if I want to write ``the interior of $[0,1]$''
+% I prefer to see
+% $$\widering{[0,1]}$$
+% than
+% $$([0,1])\ring{}$$
+% don't you?
+% 
+% And of course this notation is not my invention, I saw it in many French
+% math books (ever heard of Nick Bourbaki?).
+% 
+% \DescribeMacro{\widering}
+% I call this macro |\widering|, because it plays the r\^ole of a wide
+% symbol (and since the ring can't be widened, a parenthesis is used).
+% Here are some more examples (the first one coded as |\ring{A}|):
+% 
+% $$
+% \ring{A},
+% \widering{AB},
+% \widering{ABC},
+% \widering{ABCD},
+% \widering{ABCDE},
+% \widering{ABCDEF},
+% \widering{ABCDEFG},
+% $$
+% 
+% 
+%
+% \StopEventually{}
+%
+% \section{The code}
+% \setlength{\parindent}{0pt}
+%
+%    \begin{macrocode}
+%<*package>
+%    \end{macrocode}
+%
+% We require that the \textsf{amsmath} package is loaded:
+%    \begin{macrocode}
+\RequirePackage{amsmath}
+%    \end{macrocode}
+%
+% First of all we have to ask \LaTeX{} to use our brand new font
+% for ``large symbols''
+%    \begin{macrocode}
+\DeclareSymbolFont{largesymbols}{OMX}{yhex}{m}{n}
+%    \end{macrocode}
+%
+% Next, the four ``wide'' accents are defined, in a way similar to
+% \LaTeX{} and not to \AmS-\LaTeX{}, so \texttt{yhmath} must be 
+% loaded after |amsmath|!
+%    \begin{macrocode}
+\DeclareMathAccent{\widetilde}{\mathord}{largesymbols}{"65}
+\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
+\DeclareMathAccent{\widetriangle}{\mathord}{largesymbols}{"E6}
+\DeclareMathAccent{\wideparen}{\mathord}{largesymbols}{"F3}
+%    \end{macrocode}
+%
+% The |amatrix| environment is defined
+%    \begin{macrocode}
+\newenvironment{amatrix}{\left\langle\begin{matrix}}{\end{matrix}\right\rangle}
+%    \end{macrocode}
+% And now the |\adots| macro for anti-diagonal dots. This is just the
+% |\ddots| command, mirrored
+%    \begin{macrocode}
+\def\adots{\mathinner{\mkern2mu\raise\p@\hbox{.}
+\mkern2mu\raise4\p@\hbox{.}\mkern1mu
+\raise7\p@\vbox{\kern7\p@\hbox{.}}\mkern1mu}}
+%    \end{macrocode}
+%
+% Following the way \AmS-\LaTeX{} defines math accents, here is the
+% definition of |\ring|.
+% family.
+%    \begin{macrocode}
+\edef\@tempa#1#2{\def#1{\mathaccent\string"\noexpand\accentclass@#2 }}
+\@tempa\ring{017}
+%    \end{macrocode}
+%
+% And finally here is a (clumsy) definition of |\widering|, that is
+% a ring over an horizontal parenthesis.
+%    \begin{macrocode}
+\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
+\displaystyle\ring{}$}}}{\wideparen{#1}}}
+%    \end{macrocode}
+%
+%
+%    \begin{macrocode}
+%</package>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*fdfile>
+%    \end{macrocode}
+% Follows the FD file. Here we define the |yhex| family, at least for
+% the OMX (Old Math Extensible symbols) encoding.
+% We use the virtual font yhcmex10 to make sure that the lower 128 code
+% points are filled, too.
+%    \begin{macrocode}
+\ProvidesFile{OMXyhex.fd}
+          [2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)]
+\DeclareFontFamily{OMX}{yhex}{}
+\DeclareFontShape{OMX}{yhex}{m}{n}{
+   <-> sfixed * yhcmex10
+   }{}
+%    \end{macrocode}
+%    \begin{macrocode}
+%</fdfile>
+%    \end{macrocode}
+% \end{document}
+%    \begin{macrocode}
+%<*mffilea>
+%    \end{macrocode}
+% YH modified Computer Modern Math Extension 10 point
+if unknown cmbase: input cmbase fi
+
+font_identifier:="YRCMEX"; font_size 10pt#;
+
+u#:=20/36pt#;      % unit width
+width_adj#:=0pt#;    % width adjustment for certain characters
+serif_fit#:=0pt#;    % extra sidebar near lowercase serifs
+cap_serif_fit#:=5/36pt#;  % extra sidebar near uppercase serifs
+letter_fit#:=0pt#;    % extra space added to all sidebars
+
+body_height#:=270/36pt#;  % height of tallest characters
+asc_height#:=250/36pt#;    % height of lowercase ascenders
+cap_height#:=246/36pt#;    % height of caps
+fig_height#:=232/36pt#;    % height of numerals
+x_height#:=155/36pt#;    % height of lowercase without ascenders
+math_axis#:=90/36pt#;    % axis of symmetry for math symbols
+bar_height#:=87/36pt#;    % height of crossbar in lowercase e
+comma_depth#:=70/36pt#;    % depth of comma below baseline
+desc_depth#:=70/36pt#;    % depth of lowercase descenders
+
+crisp#:=0pt#;      % diameter of serif corners
+tiny#:=8/36pt#;      % diameter of rounded corners
+fine#:=7/36pt#;      % diameter of sharply rounded corners
+thin_join#:=7/36pt#;    % width of extrafine details
+hair#:=9/36pt#;      % lowercase hairline breadth
+stem#:=25/36pt#;    % lowercase stem breadth
+curve#:=30/36pt#;    % lowercase curve breadth
+ess#:=27/36pt#;      % breadth in middle of lowercase s
+flare#:=33/36pt#;    % diameter of bulbs or breadth of terminals
+dot_size#:=38/36pt#;    % diameter of dots
+cap_hair#:=11/36pt#;    % uppercase hairline breadth
+cap_stem#:=32/36pt#;    % uppercase stem breadth
+cap_curve#:=37/36pt#;    % uppercase curve breadth
+cap_ess#:=35/36pt#;    % breadth in middle of uppercase s
+rule_thickness#:=.4pt#;    % thickness of lines in math symbols
+
+dish#:=1/36pt#;      % amount erased at top or bottom of serifs
+bracket#:=20/36pt#;    % vertical distance from serif base to tangent
+jut#:=28/36pt#;      % protrusion of lowercase serifs
+cap_jut#:=37/36pt#;    % protrusion of uppercase serifs
+beak_jut#:=10/36pt#;    % horizontal protrusion of beak serifs
+beak#:=70/36pt#;    % vertical protrusion of beak serifs
+vair#:=8/36pt#;      % vertical diameter of hairlines
+notch_cut#:=10pt#;    % maximum breadth above or below notches
+bar#:=11/36pt#;      % lowercase bar thickness
+slab#:=11/36pt#;    % serif and arm thickness
+cap_bar#:=11/36pt#;    % uppercase bar thickness
+cap_band#:=11/36pt#;    % uppercase thickness above/below lobes
+cap_notch_cut#:=10pt#;    % max breadth above/below uppercase notches
+serif_drop#:=4/36pt#;    % vertical drop of sloped serifs
+stem_corr#:=1/36pt#;    % for small refinements of stem breadth
+vair_corr#:=1/36pt#;    % for small refinements of hairline height
+apex_corr#:=0pt#;    % extra width at diagonal junctions
+
+o#:=8/36pt#;      % amount of overshoot for curves
+apex_o#:=8/36pt#;    % amount of overshoot for diagonal junctions
+
+slant:=0;      % tilt ratio $(\Delta x/\Delta y)$
+fudge:=1;      % factor applied to weights of heavy characters
+math_spread:=0;      % extra openness of math symbols
+superness:=1/sqrt2;    % parameter for superellipses
+superpull:=1/6;      % extra openness inside bowls
+beak_darkness:=11/30;    % fraction of triangle inside beak serifs
+ligs:=2;      % level of ligatures to be included
+
+square_dots:=false;    % should dots be square?
+hefty:=false;      % should we try hard not to be overweight?
+serifs:=true;      % should serifs and bulbs be attached?
+monospace:=false;    % should all characters have the same width?
+variant_g:=false;    % should an italic-style g be used?
+low_asterisk:=false;    % should the asterisk be centered at the axis?
+math_fitting:=false;    % should math-mode spacing be used?
+
+% the following font parameters are explained in {\sl The \TeX book}, Appendix G
+fontdimen 8:  % parameters $\xi_8$ through $\xi_{13}$ will now be listed
+ rule_thickness#,  % default\_rule\_thickness
+ 40/36pt#,    % big\_op\_spacing1
+ 60/36pt#,    % big\_op\_spacing2
+ 72/36pt#,    % big\_op\_spacing3
+ 216/36pt#,    % big\_op\_spacing4
+ 36/36pt#;    % big\_op\_spacing5
+
+generate yhmathex      % switch to the driver file
+%    \begin{macrocode}
+%</mffilea>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*mffileb>
+%    \end{macrocode}
+font_coding_scheme:="TeX math extension";
+mode_setup; font_setup;
+
+input yhbigdel;  % large delimiters
+input bigop;  % large operators
+input yhbigacc;  % large accents
+
+font_x_height x_height#;
+font_quad 18u#+4letter_fit#;
+bye.
+%    \begin{macrocode}
+%</mffileb>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*mffilec>
+%    \end{macrocode}
+% This file contains series of large delimiters for math extension fonts.
+
+% The sizes are `{\tt\char`\\big}' (|2dh#|), `{\tt\char`\\Big}' (|3dh#|),
+% `{\tt\char`\\bigg}' (|4dh#|), and `{\tt\char`\\Bigg}' (|5dh#|),
+% followed in most cases by an extensible character that can grow
+% arbitrarily large in |dh#| steps,
+% where |dh#| is 60\% of the font design size.
+% (For example, a 10-point font will have large delimiters in sizes
+% 12$\,$pt, 18$\,$pt, 24$\,$pt, 30$\,$pt, 36$\,$pt, 42$\,$pt, etc.)
+
+% Character codes \0000--\0105 and \0150--\0177 are generated.
+
+charlist oct"000": oct"200": oct"020": oct"201": 
+oct"022": oct"202": oct"040": oct"203": 
+oct"204": oct"205": oct"206": oct"207": oct"210": oct"211":
+oct"060";  % left parentheses
+charlist oct"001": oct"212": oct"021": oct"213": 
+oct"023": oct"214": oct"041": oct"215": 
+oct"216": oct"217": oct"220": oct"221": oct"222": oct"223":
+oct"061";  % right parentheses
+charlist oct"002": oct"224": oct"150": oct"225": oct"024": oct"226": oct"042": oct"062";  % left brackets
+charlist oct"003": oct"227": oct"151": oct"230": oct"025": oct"231": oct"043": oct"063";  % right brackets
+charlist oct"004": oct"232": oct"152": oct"233": oct"026": oct"234": oct"044": oct"064";  % left floors
+charlist oct"005": oct"235": oct"153": oct"236": oct"027": oct"237": oct"045": oct"065";  % right floors
+charlist oct"006": oct"240": oct"154": oct"241": oct"030": oct"242": oct"046": oct"066";  % left ceilings
+charlist oct"007": oct"243": oct"155": oct"244": oct"031": oct"245": oct"047": oct"067";  % right ceilings
+charlist oct"010": oct"246": oct"156": oct"247": oct"032": oct"250": oct"050": oct"070";  % left braces
+charlist oct"011": oct"251": oct"157": oct"252": oct"033": oct"253": oct"051": oct"071";  % right braces
+charlist oct"012": oct"254": oct"104": oct"255": 
+oct"034": oct"256": oct"052": oct"257":
+oct"260": oct"261": oct"262": oct"263": oct"264": oct"265";  % left angle brackets
+charlist oct"013": oct"266": oct"105": oct"267":
+oct"035": oct"270": oct"053": oct"271":
+oct"272": oct"273": oct"274": oct"275": oct"276": oct"277";  % right angle brackets
+charlist oct"016": oct"300": oct"056": oct"301": 
+oct"036": oct"302": oct"054": oct"303";  % slashes
+charlist oct"017": oct"304": oct"057": oct"305": 
+oct"037": oct"306": oct"055": oct"307";  % backslashes
+charlist oct"160": oct"310": oct"161": oct"311":
+oct"162": oct"312": oct"163": oct"313":
+oct"314": oct"315": oct"316": oct"317": oct"320": oct"321":
+oct"164";  % radical signs
+
+extensible oct"014": 0,0,0,oct"014";  % vertical line
+extensible oct"015": 0,0,0,oct"015";  % double vertical line
+extensible oct"060": oct"060",0,oct"100",oct"102";  % left parenthesis
+extensible oct"061": oct"061",0,oct"101",oct"103";  % right parenthesis
+extensible oct"062": oct"062",0,oct"064",oct"066";  % left bracket
+extensible oct"063": oct"063",0,oct"065",oct"067";  % right bracket
+extensible oct"064": 0,0,oct"064",oct"066";  % left floor bracket
+extensible oct"065": 0,0,oct"065",oct"067";  % right floor bracket
+extensible oct"066": oct"062",0,0,oct"066";  % left ceiling bracket
+extensible oct"067": oct"063",0,0,oct"067";  % right ceiling bracket
+extensible oct"070": oct"070",oct"074",oct"072",oct"076";  % left brace
+extensible oct"071": oct"071",oct"075",oct"073",oct"076";  % right brace
+extensible oct"072": oct"070",0,oct"072",oct"076";  % sharp left parenthesis
+extensible oct"073": oct"071",0,oct"073",oct"076";  % sharp right parenthesis
+extensible oct"074": 0,0,0,oct"077";  % arrow extension modules only
+extensible oct"075": 0,0,0,oct"167";  % double arrow extension modules only
+extensible oct"076": 0,0,0,oct"076";  % brace extension modules only
+extensible oct"077": oct"170",0,oct"171",oct"077";  % updownarrow
+extensible oct"100": oct"070",0,oct"073",oct"076";  % left moustache
+extensible oct"101": oct"071",0,oct"072",oct"076";  % right moustache
+extensible oct"102": 0,0,0,oct"102";  % left parenthesis extension modules only
+extensible oct"103": 0,0,0,oct"103";  % right parenthesis extension modules only
+extensible oct"164": oct"166",0,oct"164",oct"165";  % radical sign
+extensible oct"167": oct"176",0,oct"177",oct"167";  % double updownarrow
+extensible oct"170": oct"170",0,0,oct"077";  % uparrow
+extensible oct"171": 0,0,oct"171",oct"077";  % downarrow
+extensible oct"176": oct"176",0,0,oct"167";  % double uparrow
+extensible oct"177": 0,0,oct"177",oct"167";  % double downarrow
+
+cmchar "\big left parenthesis";
+beginchar(oct"000",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(1.5u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\Big left parenthesis";
+beginchar(oct"020",9u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(2u#,-.25u#); left_paren(rule_thickness,.5[stem,bold]); endchar;
+
+cmchar "\bigg left parenthesis";
+beginchar(oct"022",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(2.5u#,-.25u#); left_paren(rule_thickness+.2dw,bold); endchar;
+
+cmchar "\Bigg left parenthesis";
+beginchar(oct"040",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(3u#,-.25u#); left_paren(rule_thickness+.4dw,bold+dw); endchar;
+
+cmchar "Extensible left parenthesis---top";
+beginchar(oct"060",12u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(4u#,-.25u#); pickup fine.nib;
+numeric min_breadth,max_breadth;
+min_breadth=rule_thickness+.6dw; max_breadth=bold+2dw;
+pos1(hround min_breadth,0); pos2(hround max_breadth,0);
+rt x1r=hround(w-1.25u+.5min_breadth); lft x2l=hround 1.25u;
+top y1=h-1; y2=-d-eps;
+filldraw stroke z1e{3(x2e-x1e),y2-y1}...{down}z2e;  % upper arc
+penlabels(1,2); endchar;
+
+cmchar "Extensible left parenthesis---bottom";
+beginchar(oct"100",12u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(4u#,-.25u#); pickup fine.nib;
+numeric min_breadth,max_breadth;
+min_breadth=rule_thickness+.6dw; max_breadth=bold+2dw;
+pos3(hround min_breadth,0); pos2(hround max_breadth,0);
+rt x3r=hround(w-1.25u+.5min_breadth); lft x2l=hround 1.25u;
+bot y3=1-d; y2=h+eps;
+filldraw stroke z3e{3(x2e-x3e),y2-y3}...{up}z2e;  % lower arc
+penlabels(2,3); endchar;
+
+cmchar "Extensible left parenthesis---extension module";
+beginchar(oct"102",12u#,0,dh#);
+adjust_fit(4u#,-.25u#); pickup fine.nib;
+numeric max_breadth; max_breadth=bold+2dw;
+pos2(hround max_breadth,0); pos2'(hround max_breadth,0);
+lft x2l=lft x2'l=hround 1.25u; y2=h+eps; y2'=-d-eps;
+filldraw stroke z2e--z2'e;  % link
+penlabels(2,2'); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"001",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(-.25u#,1.5u#); right_paren(hair,stem); endchar;
+
+cmchar "\Big right parenthesis";
+beginchar(oct"021",9u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(-.25u#,2u#); right_paren(rule_thickness,.5[stem,bold]); endchar;
+
+cmchar "\bigg right parenthesis";
+beginchar(oct"023",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(-.25u#,2.5u#); right_paren(rule_thickness+.2dw,bold); endchar;
+
+cmchar "\Bigg right parenthesis";
+beginchar(oct"041",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(-.25u#,3u#); right_paren(rule_thickness+.4dw,bold+dw); endchar;
+
+cmchar "Extensible right parenthesis---top";
+beginchar(oct"061",12u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(-.25u#,4u#); pickup fine.nib;
+numeric min_breadth,max_breadth;
+min_breadth=rule_thickness+.6dw; max_breadth=bold+2dw;
+pos1(hround min_breadth,0); pos2(hround max_breadth,0);
+lft x1l=hround(1.25u-.5min_breadth); rt x2r=hround(w-1.25u);
+top y1=h-1; y2=-d-eps;
+filldraw stroke z1e{3(x2e-x1e),y2-y1}...{down}z2e;  % upper arc
+penlabels(1,2); endchar;
+
+cmchar "Extensible right parenthesis---bottom";
+beginchar(oct"101",12u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(-.25u#,4u#); pickup fine.nib;
+numeric min_breadth,max_breadth;
+min_breadth=rule_thickness+.6dw; max_breadth=bold+2dw;
+pos3(hround min_breadth,0); pos2(hround max_breadth,0);
+lft x3l=hround(1.25u-.5min_breadth); rt x2r=hround(w-1.25u);
+bot y3=1-d; y2=h+eps;
+filldraw stroke z3e{3(x2e-x3e),y2-y3}...{up}z2e;  % lower arc
+penlabels(2,3); endchar;
+
+cmchar "Extensible right parenthesis---extension module";
+beginchar(oct"103",12u#,0,dh#);
+adjust_fit(-.25u#,4u#); pickup fine.nib;
+numeric max_breadth; max_breadth=bold+2dw;
+pos2(hround max_breadth,0); pos2'(hround max_breadth,0);
+rt x2r=rt x2'r=hround(w-1.25u); y2=h+eps; y2'=-d-eps;
+filldraw stroke z2e--z2'e;  % link
+penlabels(2,2'); endchar;
+
+cmchar "\big left bracket";
+beginchar(oct"002",6u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(1.5u#,0); left_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\Big left bracket";
+beginchar(oct"150",6.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(2u#,0); left_bracket(.25[rule_thickness,stem],true,true); endchar;
+
+cmchar "\bigg left bracket";
+beginchar(oct"024",7u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(2.5u#,0); left_bracket(.5[rule_thickness,stem],true,true); endchar;
+
+cmchar "\Bigg left bracket";
+beginchar(oct"042",7.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(3u#,0); left_bracket(.75[rule_thickness,stem],true,true); endchar;
+
+cmchar "Extensible left bracket---top";
+beginchar(oct"062",8u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(4u#,0); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+top y1=h-1; y2=-d-eps; lft x1l=lft x2l=hround(2.5u-.5stem);
+filldraw stroke z1e--z2e;  % stem
+pos3(stem,90); pos4(stem,90);
+x3=x1l; rt x4=hround(w-.75u+.5stem); y3r=y4r=y1;
+filldraw stroke z3e--z4e;  % upper bar
+penlabels(1,2,3,4); endchar;
+
+cmchar "Extensible left bracket---bottom";
+beginchar(oct"064",8u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(4u#,0); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+y1=h+eps; bot y2=1-d; lft x1l=lft x2l=hround(2.5u-.5stem);
+filldraw stroke z1e--z2e;  % stem
+pos5(stem,90); pos6(stem,90);
+x5=x1l; rt x6=hround(w-.75u+.5stem); y5l=y6l=y2;
+filldraw stroke z5e--z6e;  % lower bar
+penlabels(1,2,5,6); endchar;
+
+cmchar "Extensible left bracket---extension module";
+beginchar(oct"066",8u#,0,dh#);
+adjust_fit(4u#,0); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+y1=h+1+eps; bot y2=-d-1-eps; lft x1l=lft x2l=hround(2.5u-.5stem);
+filldraw stroke z1e--z2e;  % stem
+penlabels(1,2); endchar;
+
+cmchar "\big right bracket";
+beginchar(oct"003",6u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(0,1.5u#); right_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\Big right bracket";
+beginchar(oct"151",6.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(0,2u#); right_bracket(.25[rule_thickness,stem],true,true); endchar;
+
+cmchar "\bigg right bracket";
+beginchar(oct"025",7u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(0,2.5u#); right_bracket(.5[rule_thickness,stem],true,true); endchar;
+
+cmchar "\Bigg right bracket";
+beginchar(oct"043",7.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(0,3u#); right_bracket(.75[rule_thickness,stem],true,true); endchar;
+
+cmchar "Extensible right bracket---top";
+beginchar(oct"063",8u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(0,4u#); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+top y1=h-1; y2=-d-eps; rt x1r=rt x2r=hround(w-2.5u+.5stem);
+filldraw stroke z1e--z2e;  % stem
+pos3(stem,90); pos4(stem,90);
+x3=x1r; lft x4=hround(.75u-.5stem); y3r=y4r=y1;
+filldraw stroke z3e--z4e;  % upper bar
+penlabels(1,2,3,4); endchar;
+
+cmchar "Extensible right bracket---bottom";
+beginchar(oct"065",8u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(0,4u#); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+y1=h+eps; bot y2=1-d; rt x1r=rt x2r=hround(w-2.5u+.5stem);
+filldraw stroke z1e--z2e;  % stem
+pos5(stem,90); pos6(stem,90);
+x5=x1r; lft x6=hround(.75u-.5stem); y5l=y6l=y2;
+filldraw stroke z5e--z6e;  % lower bar
+penlabels(1,2,5,6); endchar;
+
+cmchar "Extensible right bracket---extension module";
+beginchar(oct"067",8u#,0,dh#);
+adjust_fit(0,4u#); pickup crisp.nib;
+pos1(stem,0); pos2(stem,0);
+y1=h+1+eps; bot y2=-d-1-eps; rt x1r=rt x2r=hround(w-2.5u+.5stem);
+filldraw stroke z1e--z2e;  % stem
+penlabels(1,2); endchar;
+
+cmchar "\big left floor bracket";
+beginchar(oct"004",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(1.5u#,0); left_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\Big left floor bracket";
+beginchar(oct"152",7.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(2u#,0); left_bracket(.25[rule_thickness,stem],false,true); endchar;
+
+cmchar "\bigg left floor bracket";
+beginchar(oct"026",8u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(2.5u#,0); left_bracket(.5[rule_thickness,stem],false,true); endchar;
+
+cmchar "\Bigg left floor bracket";
+beginchar(oct"044",8.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(3u#,0); left_bracket(.75[rule_thickness,stem],false,true); endchar;
+
+cmchar "\big right floor bracket";
+beginchar(oct"005",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(0,1.5u#); right_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\Big right floor bracket";
+beginchar(oct"153",7.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(0,2u#); right_bracket(.25[rule_thickness,stem],false,true); endchar;
+
+cmchar "\bigg right floor bracket";
+beginchar(oct"027",8u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(0,2.5u#); right_bracket(.5[rule_thickness,stem],false,true); endchar;
+
+cmchar "\Bigg right floor bracket";
+beginchar(oct"045",8.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(0,3u#); right_bracket(.75[rule_thickness,stem],false,true); endchar;
+
+cmchar "\big left ceiling bracket";
+beginchar(oct"006",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(1.5u#,0); left_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\Big left ceiling bracket";
+beginchar(oct"154",7.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(2u#,0); left_bracket(.25[rule_thickness,stem],true,false); endchar;
+
+cmchar "\bigg left ceiling bracket";
+beginchar(oct"030",8u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(2.5u#,0); left_bracket(.5[rule_thickness,stem],true,false); endchar;
+
+cmchar "\Bigg left ceiling bracket";
+beginchar(oct"046",8.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(3u#,0); left_bracket(.75[rule_thickness,stem],true,false); endchar;
+
+cmchar "\big right ceiling bracket";
+beginchar(oct"007",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(0,1.5u#); right_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\Big right ceiling bracket";
+beginchar(oct"155",7.5u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(0,2u#); right_bracket(.25[rule_thickness,stem],true,false); endchar;
+
+cmchar "\bigg right ceiling bracket";
+beginchar(oct"031",8u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(0,2.5u#); right_bracket(.5[rule_thickness,stem],true,false); endchar;
+
+cmchar "\Bigg right ceiling bracket";
+beginchar(oct"047",8.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(0,3u#); right_bracket(.75[rule_thickness,stem],true,false); endchar;
+
+cmchar "\big left curly brace";
+beginchar(oct"010",9u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(.75u#,.75u#); left_curly(hair,stem); endchar;
+
+cmchar "\Big left curly brace";
+beginchar(oct"156",10u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(u#,u#); left_curly(rule_thickness,.5[stem,bold]); endchar;
+
+cmchar "\bigg left curly brace";
+beginchar(oct"032",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(1.25u#,1.25u#); left_curly(rule_thickness+.2dw,bold); endchar;
+
+cmchar "\Bigg left curly brace";
+beginchar(oct"050",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,1.5u#); left_curly(rule_thickness+.4dw,bold+dw); endchar;
+
+cmchar "Extensible left curly brace---top";
+beginchar(oct"070",12u#,0,1.5dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos1(min_breadth,0); pos1'(min_breadth,0);
+pos2(heavy_rule_thickness,0); pos3(heavy_rule_thickness,0);
+rt x1r=rt x1'r=hround(w-1.5u+.5min_breadth);
+lft x2l=lft x3l=hround(.5w-.5heavy_rule_thickness);
+top y1=h-1; y3=-d-eps; y2=.5[y1,y3]; y1-y1'=min_breadth-fine;
+filldraw z1l{3(x2l-x1l),y2-y1}...z2l---z3l
+ --z3r---z2r...{3(x1r-x2r),y1'-y2}z1'r--z1r--cycle;  % stroke
+penlabels(1,2,3); endchar;
+
+cmchar "Extensible left curly brace---bottom";
+beginchar(oct"072",12u#,0,1.5dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos7(min_breadth,0); pos7'(min_breadth,0);
+pos5(heavy_rule_thickness,0); pos6(heavy_rule_thickness,0);
+rt x7r=rt x7'r=hround(w-1.5u+.5min_breadth);
+lft x5l=lft x6l=hround(.5w-.5heavy_rule_thickness);
+y5=h+eps; bot y7=1-d; y6=.5[y5,y7]; y7'-y7=min_breadth-fine;
+filldraw z5l---z6l...{3(x7l-x6l),y7-y6}z7l
+ --z7r--z7'r{3(x6r-x7r),y6-y7'}...z6r---z5r--cycle;  % stroke
+penlabels(5,6,7); endchar;
+
+cmchar "Extensible left curly brace---middle";
+beginchar(oct"074",12u#,0,3dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos4(min_breadth,0); pos4'(min_breadth,0);
+forsuffixes $=2,3,5,6: pos$(heavy_rule_thickness,0); endfor
+lft x4l=lft x4'l=hround(1.5u-.5min_breadth);
+x2=x3=x5=x6; lft x2l=hround(.5w-.5heavy_rule_thickness);
+y2=h+eps; y6=-d-eps; .5[y4,y4']=.5[y2,y6]=.5[y3,y5];
+y3-y4=(y2-y6)/4; y4-y4'=min_breadth-fine;
+filldraw z2l---z3l...{3(x4l-x3l),y4-y3}z4l
+ --z4'l{3(x5l-x4l),y5-y4'}...z5l---z6l--z6r---z5r
+ ...{3(x4r-x5r),.5[y4,y4']-y5}.5[z4r,z4'r]{3(x3r-x4r),y3-.5[y4,y4']}
+ ...z3r---z2r--cycle;  % stroke
+penlabels(2,3,4,5,6); endchar;
+
+cmchar "Extensible curly brace---extension module";
+beginchar(oct"076",12u#,0,.5dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+pos2(heavy_rule_thickness,0); pos3(heavy_rule_thickness,0);
+lft x2l=lft x3l=hround(.5w-.5heavy_rule_thickness); y2=h+eps; y3=-d-eps;
+filldraw stroke z2e--z3e;  % stem
+penlabels(2,3); endchar;
+
+cmchar "\big right curly brace";
+beginchar(oct"011",9u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(.75u#,.75u#); right_curly(hair,stem); endchar;
+
+cmchar "\Big right curly brace";
+beginchar(oct"157",10u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(u#,u#); right_curly(rule_thickness,.5[stem,bold]); endchar;
+
+cmchar "\bigg right curly brace";
+beginchar(oct"033",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(1.25u#,1.25u#); right_curly(rule_thickness+.2dw,bold); endchar;
+
+cmchar "\Bigg right curly brace";
+beginchar(oct"051",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,1.5u#); right_curly(rule_thickness+.4dw,bold+dw); endchar;
+
+cmchar "Extensible right curly brace---top";
+beginchar(oct"071",12u#,0,1.5dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos1(min_breadth,0); pos1'(min_breadth,0);
+pos2(heavy_rule_thickness,0); pos3(heavy_rule_thickness,0);
+lft x1l=lft x1'l=hround(1.5u-.5min_breadth);
+lft x2l=lft x3l=hround(.5w-.5heavy_rule_thickness);
+top y1=h-1; y3=-d-eps; y2=.5[y1,y3]; y1-y1'=min_breadth-fine;
+filldraw z1r{3(x2r-x1r),y2-y1}...z2r---z3r
+ --z3l---z2l...{3(x1l-x2l),y1'-y2}z1'l--z1l--cycle;  % stroke
+penlabels(1,2,3); endchar;
+
+cmchar "Extensible right curly brace---bottom";
+beginchar(oct"073",12u#,0,1.5dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos7(min_breadth,0); pos7'(min_breadth,0);
+pos5(heavy_rule_thickness,0); pos6(heavy_rule_thickness,0);
+lft x7l=lft x7'l=hround(1.5u-.5min_breadth);
+lft x5l=lft x6l=hround(.5w-.5heavy_rule_thickness);
+y5=h+eps; bot y7=1-d; y6=.5[y5,y7]; y7'-y7=min_breadth-fine;
+filldraw z5r---z6r...{3(x7r-x6r),y7-y6}z7r
+ --z7l--z7'l{3(x6l-x7l),y6-y7'}...z6l---z5l--cycle;  % stroke
+penlabels(5,6,7); endchar;
+
+cmchar "Extensible right curly brace---middle";
+beginchar(oct"075",12u#,0,3dh#);
+adjust_fit(2u#,2u#); pickup fine.nib;
+numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
+pos4(min_breadth,0); pos4'(min_breadth,0);
+forsuffixes $=2,3,5,6: pos$(heavy_rule_thickness,0); endfor
+rt x4r=rt x4'r=hround(w-1.5u+.5min_breadth);
+x2=x3=x5=x6; lft x2l=hround(.5w-.5heavy_rule_thickness);
+y2=h+eps; y6=-d-eps; .5[y4,y4']=.5[y2,y6]=.5[y3,y5];
+y3-y4=(y2-y6)/4; y4-y4'=min_breadth-fine;
+filldraw z2r---z3r...{3(x4r-x3r),y4-y3}z4r
+ --z4'r{3(x5r-x4r),y5-y4'}...z5r---z6r--z6l---z5l
+ ...{3(x4l-x5l),.5[y4,y4']-y5}.5[z4l,z4'l]{3(x3l-x4l),y3-.5[y4,y4']}
+ ...z3l---z2l--cycle;  % stroke
+penlabels(2,3,4,5,6); endchar;
+
+cmchar "Horizontal curly brace tip---down and left";
+beginchar(oct"172",.75dh#,3rule_thickness#,0);
+adjust_fit(0,0); pickup fine.nib;
+numeric min_breadth; min_breadth=vround(rule_thickness+.6dw);
+pos1(min_breadth,90); pos1'(min_breadth,90);
+pos2(heavy_rule_thickness,90);
+bot y2l=0; bot y1l=bot y1'l=vround(y2-4.5u-.5min_breadth);
+.5[x1,x1']=-eps; x2=w+shrink_fit+eps; x1'-x1=min_breadth-fine;
+filldraw z1r{x2-x1,3(y2r-y1r)}...{right}z2r
+ --z2l{left}...{x1'-x2,3(y1-y2)}z1'l--z1l--cycle;  % stroke
+penlabels(1,2); endchar;
+
+cmchar "Horizontal curly brace tip---down and right";
+beginchar(oct"173",.75dh#,3rule_thickness#,0);
+adjust_fit(0,0); pickup fine.nib;
+numeric min_breadth; min_breadth=vround(rule_thickness+.6dw);
+pos1(min_breadth,90); pos1'(min_breadth,90);
+pos2(heavy_rule_thickness,90);
+bot y2l=0; bot y1l=bot y1'l=vround(y2-4.5u-.5min_breadth);
+.5[x1,x1']=w+shrink_fit+eps; x2=-eps; x1-x1'=min_breadth-fine;
+filldraw z1r{x2-x1,3(y2r-y1r)}...{left}z2r
+ --z2l{right}...{x1'-x2,3(y1-y2)}z1'l--z1l--cycle;  % stroke
+penlabels(1,2); endchar;
+
+cmchar "Horizontal curly brace tip---up and left";
+beginchar(oct"174",.75dh#,3rule_thickness#,0);
+adjust_fit(0,0); pickup fine.nib;
+numeric min_breadth; min_breadth=vround(rule_thickness+.6dw);
+pos1(min_breadth,90); pos1'(min_breadth,90);
+pos2(heavy_rule_thickness,90);
+bot y2l=0; top y1r=top y1'r=vround(y2+4.5u+.5min_breadth);
+.5[x1,x1']=-eps; x2=w+shrink_fit+eps; x1'-x1=min_breadth-fine;
+filldraw z1l{x2-x1,3(y2l-y1l)}...{right}z2l
+ --z2r{left}...{x1'-x2,3(y1-y2)}z1'r--z1r--cycle;  % stroke
+penlabels(1,2); endchar;
+
+cmchar "Horizontal curly brace tip---up and right";
+beginchar(oct"175",.75dh#,3rule_thickness#,0);
+adjust_fit(0,0); pickup fine.nib;
+numeric min_breadth; min_breadth=vround(rule_thickness+.6dw);
+pos1(min_breadth,90); pos1'(min_breadth,90);
+pos2(heavy_rule_thickness,90);
+bot y2l=0; top y1r=top y1'r=vround(y2+4.5u+.5min_breadth);
+.5[x1,x1']=w+shrink_fit+eps; x2=-eps; x1-x1'=min_breadth-fine;
+filldraw z1l{x2-x1,3(y2l-y1l)}...{left}z2l
+ --z2r{right}...{x1'-x2,3(y1-y2)}z1'r--z1r--cycle;  % stroke
+penlabels(1,2); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"012",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(.75u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\Big left angle bracket";
+beginchar(oct"104",9u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(u#,u#); left_angle(.25[rule_thickness,stem]); endchar;
+
+cmchar "\bigg left angle bracket";
+beginchar(oct"034",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(1.25u#,1.25u#); left_angle(.5[rule_thickness,stem]); endchar;
+
+cmchar "\Bigg left angle bracket";
+beginchar(oct"052",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,1.5u#); left_angle(.75[rule_thickness,stem]); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"013",7u#,rule_thickness#,2dh#-rule_thickness#);
+adjust_fit(.75u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\Big right angle bracket";
+beginchar(oct"105",9u#,rule_thickness#,3dh#-rule_thickness#);
+adjust_fit(u#,u#); right_angle(.25[rule_thickness,stem]); endchar;
+
+cmchar "\bigg right angle bracket";
+beginchar(oct"035",11u#,rule_thickness#,4dh#-rule_thickness#);
+adjust_fit(1.25u#,1.25u#); right_angle(.5[rule_thickness,stem]); endchar;
+
+cmchar "\Bigg right angle bracket";
+beginchar(oct"053",11.5u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,1.5u#); right_angle(.75[rule_thickness,stem]); endchar;
+
+cmchar "\big slash";
+beginchar(oct"016",10.4u#,rule_thickness#,2dh#-rule_thickness#);
+big_slash(rule_thickness+.2dw); endchar;
+
+cmchar "\Big slash";
+beginchar(oct"056",14.6u#,rule_thickness#,3dh#-rule_thickness#);
+big_slash(rule_thickness+.6dw); endchar;
+
+cmchar "\bigg slash";
+beginchar(oct"036",18.8u#,rule_thickness#,4dh#-rule_thickness#);
+big_slash(rule_thickness+dw); endchar;
+
+cmchar "\Bigg slash";
+beginchar(oct"054",23u#,rule_thickness#,5dh#-rule_thickness#);
+big_slash(rule_thickness+1.5dw); endchar;
+
+cmchar "\big backslash";
+beginchar(oct"017",10.4u#,rule_thickness#,2dh#-rule_thickness#);
+big_blash(rule_thickness+.2dw); endchar;
+
+cmchar "\Big backslash";
+beginchar(oct"057",14.6u#,rule_thickness#,3dh#-rule_thickness#);
+big_blash(rule_thickness+.6dw); endchar;
+
+cmchar "\bigg backslash";
+beginchar(oct"037",18.8u#,rule_thickness#,4dh#-rule_thickness#);
+big_blash(rule_thickness+dw); endchar;
+
+cmchar "\Bigg backslash";
+beginchar(oct"055",23u#,rule_thickness#,5dh#-rule_thickness#);
+big_blash(rule_thickness+1.5dw); endchar;
+
+cmchar "Extensible vertical line---extension module";
+beginchar(oct"014",6u#,0,dh#);
+adjust_fit(0,0); pickup pencircle scaled(rule_thickness+.2dw);
+x1=x2=good.x .5w; y1=eps; y2=-d-eps;
+draw z1--z2;  % stem
+labels(1,2); endchar;
+
+cmchar "Extensible double vertical line---extension module";
+beginchar(oct"015",10u#,0,dh#);
+adjust_fit(0,0); pickup pencircle scaled(rule_thickness+.2dw);
+x1=x2=good.x .3w; x3=x4=w-x1; y1=y3=eps; y2=y4=-d-eps;
+draw z1--z2; draw z3--z4;  % stems
+labels(1,2,3,4); endchar;
+
+cmchar "Extensible vertical arrow--top";
+beginchar(oct"170",12u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness,barr;
+thickness=hround(rule_thickness+.2dw); barr=Vround .6[bar,thickness];
+pos1(thickness,0); pos2(thickness,0); pos3(barr,90); pos4(barr,90);
+lft x1l=hround(.5w-.5thickness); y1=-d-eps;
+x0=x1=x2; top y0=h; x0-x3=x4-x0=4u+eps;
+y3=y4=y0-.29asc_height-eps;
+pos5(barr,angle(z4-z0)); z5l=z0;
+pos6(barr,angle(z3-z0)); z6l=z0;
+z9=.381966[.5[z3,z4],z0];
+numeric t; path p; p=z4l{z9-z4}..z6r;
+t=xpart(p intersectiontimes((x2r,-d)--(x2r,h))); y2=ypart point t of p;
+filldraw z0..{z4-z9}z4r--subpath (0,t) of\\(z4l{z9-z4}..z6r)
+ --z2r---z1r--z1l---z2l--subpath (t,0) of\\(z3l{z9-z3}..z5r)
+ --z3r{z9-z3}..z0 & cycle;  % arrowhead and stem
+penlabels(0,1,2,3,4,5,6,9); endchar;
+
+cmchar "Extensible vertical arrow--bottom";
+beginchar(oct"171",12u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness,barr;
+thickness=hround(rule_thickness+.2dw); barr=Vround .6[bar,thickness];
+pos1(thickness,0); pos2(thickness,0); pos3(barr,90); pos4(barr,90);
+lft x1l=hround(.5w-.5thickness); y1=h+eps;
+x0=x1=x2; bot y0=-d; x0-x3=x4-x0=4u+eps;
+y3=y4=y0+.29asc_height+eps;
+pos5(barr,angle(z4-z0)); z5l=z0;
+pos6(barr,angle(z3-z0)); z6l=z0;
+z9=.381966[.5[z3,z4],z0];
+numeric t; path p; p=z4r{z9-z4}..z6r;
+t=xpart(p intersectiontimes((x2r,-d)--(x2r,h))); y2=ypart point t of p;
+filldraw z0..{z4-z9}z4l--subpath (0,t) of\\(z4r{z9-z4}..z6r)
+ --z2r---z1r--z1l---z2l--subpath (t,0) of\\(z3r{z9-z3}..z5r)
+ --z3l{z9-z3}..z0 & cycle;  % arrowhead and stem
+penlabels(0,1,2,3,4,5,6,9); endchar;
+
+"Extensible vertical arrow--extension module";
+beginchar(oct"077",12u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness; thickness=hround(rule_thickness+.2dw);
+pos1(thickness,0); pos2(thickness,0);
+lft x1l=hround(.5w-.5thickness); x2=x1; y1=h+1+eps; y2=-d-1-eps;
+filldraw stroke z1e--z2e;  % stem
+penlabels(1,2); endchar;
+
+cmchar "Extensible double vertical arrow--top";
+beginchar(oct"176",14u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness; thickness=Vround(rule_thickness+.2dw);
+pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
+y1=y2=-d-eps; y7=y8=h; top y0=h+eps; x1=x7; x2=x8;
+rt x1r=hround(.5w+2u+.5thickness); .5[x1,x2]=x0=good.x .5w;
+filldraw stroke z1e--z7e; filldraw stroke z2e--z8e;  % bars
+pos3(thickness,90); pos4(thickness,90);
+x2-x3=x4-x1=4u+eps; y3=y4=y0-.48asc_height-eps;
+pos5(thickness,angle(z4-z0)); z5l=z0;
+pos6(thickness,angle(z3-z0)); z6l=z0; z9=.381966[.5[z3,z4],z0];
+erase filldraw z0..{z3-z9}z3--(x3,h)
+ --(x4,h)--z4{z9-z4}..z0 & cycle;  % erase excess
+numeric t; path p; p=z4l{z9-z4}..z6r;
+t=xpart(p intersectiontimes((x0,-d)--(x0,h)));
+filldraw z0..{z4-z9}z4r--subpath (0,t) of\\(z4l{z9-z4}..z6r)
+ --subpath (t,0) of\\(z3l{z9-z3}..z5r)--z3r{z9-z3}..z0 & cycle;  % arrowhead
+penlabels(0,1,2,3,4,5,6,7,8,9); endchar;
+
+cmchar "Extensible double vertical arrow--bottom";
+beginchar(oct"177",14u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness; thickness=Vround(rule_thickness+.2dw);
+pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
+y1=y2=h+eps; y7=y8=-d; bot y0=-d-eps; x1=x7; x2=x8;
+rt x1r=hround(.5w+2u+.5thickness); .5[x1,x2]=x0=good.x .5w;
+filldraw stroke z1e--z7e; filldraw stroke z2e--z8e;  % bars
+pos3(thickness,90); pos4(thickness,90);
+x2-x3=x4-x1=4u+eps; y3=y4=y0+.48asc_height-eps;
+pos5(thickness,angle(z4-z0)); z5l=z0;
+pos6(thickness,angle(z3-z0)); z6l=z0; z9=.381966[.5[z3,z4],z0];
+erase filldraw z0..{z3-z9}z3--(x3,-d)
+ --(x4,-d)--z4{z9-z4}..z0 & cycle;  % erase excess
+numeric t; path p; p=z4r{z9-z4}..z6r;
+t=xpart(p intersectiontimes((x0,-d)--(x0,h)));
+filldraw z0..{z4-z9}z4l--subpath (0,t) of\\(z4r{z9-z4}..z6r)
+ --subpath (t,0) of\\(z3r{z9-z3}..z5r)--z3l{z9-z3}..z0 & cycle;  % arrowhead
+penlabels(0,1,2,3,4,5,6,7,8,9); endchar;
+
+"Extensible double vertical arrow--extension module";
+beginchar(oct"167",14u#,0,dh#);
+adjust_fit(0,0); pickup crisp.nib;
+numeric thickness; thickness=Vround(rule_thickness+.2dw);
+pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
+y1=y2=h+1+eps; y7=y8=-d-1-eps; x1=x7; x2=x8;
+rt x1r=hround(.5w+2u+.5thickness); .5[x1,x2]=good.x .5w;
+filldraw stroke z1e--z7e; filldraw stroke z2e--z8e;  % bars
+penlabels(1,2,7,8); endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"160",18u#,rule_thickness#,2dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\Big radical sign";
+beginchar(oct"161",18u#,rule_thickness#,3dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\bigg radical sign";
+beginchar(oct"162",18u#,rule_thickness#,4dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\Bigg radical sign";
+beginchar(oct"163",18u#,rule_thickness#,5dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "Extensible radical sign---bottom";
+beginchar(oct"164",19u#,0,3dh#);
+adjust_fit(0,-letter_fit#); pickup rule.nib;
+x1=x2=good.x(w-6u); bot y1=1-d; y2=h+eps;
+draw z1--z2;  % diagonal
+pickup crisp.nib; pos3(max(curve,rule_thickness),0);
+x3l=good.x 3u; y3=.9[y1,y2];
+pos4(rule_thickness,0); x4=x1; bot y4=-d;
+pos5(vair,-45); x5l=good.x(x3l-u); z5l=whatever[z3r,(x2,body_height)];
+z6=z5r+whatever*((x2,body_height)-z3r)=whatever[z3l,z4l];
+z7=whatever[z1,z2]=z3r+whatever*(z4l-z3l);
+filldraw z5r--z6--z4l--z4--z7--z3r--z5l--cycle;  % left diagonal and serif
+penlabels(1,2,3,4,5,6,7); endchar;
+
+cmchar "Extensible radical sign---extension module";
+beginchar(oct"165",19u#,0,dh#);
+adjust_fit(0,-letter_fit#); pickup rule.nib;
+x1=x2=good.x(w-6u); y1=-d-eps; y2=h+eps;
+draw z1--z2;  % stem
+labels(1,2); endchar;
+
+cmchar "Extensible radical sign---top";
+beginchar(oct"166",19u#,rule_thickness#,dh#-rule_thickness#);
+adjust_fit(0,-letter_fit#); pickup rule.nib;
+x1=x2=good.x(w-6u); x3=good.x(w+.5); y1=-d-eps; bot y2=bot y3=0;
+draw z1--z2--z3;  % stem and link
+labels(1,2,3); endchar;
+
+%%%%%%% NEW STUFF (YH 1996-01-04)
+
+cmchar "\big left parenthesis";
+beginchar(oct"200",8u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(1.75u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"201",10u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(2.25u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"202",12u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(2.75u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"203",13u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(3u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"204",15u#,rule_thickness#,6dh#-rule_thickness#);
+adjust_fit(3.5u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"205",17u#,rule_thickness#,7dh#-rule_thickness#);
+adjust_fit(4u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"206",19u#,rule_thickness#,8dh#-rule_thickness#);
+adjust_fit(4.5u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"207",21u#,rule_thickness#,9dh#-rule_thickness#);
+adjust_fit(5u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"210",23u#,rule_thickness#,10dh#-rule_thickness#);
+adjust_fit(5.5u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big left parenthesis";
+beginchar(oct"211",25u#,rule_thickness#,11dh#-rule_thickness#);
+adjust_fit(6u#,-.25u#); left_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"212",8u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(-.25u#,1.75u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"213",10u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(-.25u#,2.25u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"214",12u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(-.25u#,2.75u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"215",13u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(-.25u#,3u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"216",15u#,rule_thickness#,6dh#-rule_thickness#);
+adjust_fit(-.25u#,3.5u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"217",17u#,rule_thickness#,7dh#-rule_thickness#);
+adjust_fit(-.25u#,4u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"220",19u#,rule_thickness#,8dh#-rule_thickness#);
+adjust_fit(-.25u#,4.5u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"221",21u#,rule_thickness#,9dh#-rule_thickness#);
+adjust_fit(-.25u#,5u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"222",23u#,rule_thickness#,10dh#-rule_thickness#);
+adjust_fit(-.25u#,5.5u#); right_paren(hair,stem); endchar;
+
+cmchar "\big right parenthesis";
+beginchar(oct"223",25u#,rule_thickness#,11dh#-rule_thickness#);
+adjust_fit(-.25u#,6u#); right_paren(hair,stem); endchar;
+
+cmchar "\big left bracket";
+beginchar(oct"224",6.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(1.75u#,0); left_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big left bracket";
+beginchar(oct"225",6.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(2.25u#,0); left_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big left bracket";
+beginchar(oct"226",7.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(2.75u#,0); left_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big right bracket";
+beginchar(oct"227",6.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(0,1.75u#); right_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big right bracket";
+beginchar(oct"230",6.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(0,2.25u#); right_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big right bracket";
+beginchar(oct"231",7.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(0,2.75u#); right_bracket(rule_thickness,true,true); endchar;
+
+cmchar "\big left floor bracket";
+beginchar(oct"232",7.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(1.75u#,0); left_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big left floor bracket";
+beginchar(oct"233",7.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(2.25u#,0); left_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big left floor bracket";
+beginchar(oct"234",8.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(2.75u#,0); left_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big right floor bracket";
+beginchar(oct"235",7.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(0,1.75u#); right_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big right floor bracket";
+beginchar(oct"236",7.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(0,2.25u#); right_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big right floor bracket";
+beginchar(oct"237",8.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(0,2.75u#); right_bracket(rule_thickness,false,true); endchar;
+
+cmchar "\big left ceiling bracket";
+beginchar(oct"240",7.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(1.75u#,0); left_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big left ceiling bracket";
+beginchar(oct"241",7.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(2.25u#,0); left_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big left ceiling bracket";
+beginchar(oct"242",8.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(2.75u#,0); left_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big right ceiling bracket";
+beginchar(oct"243",7.25u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(0,1.75u#); right_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big right ceiling bracket";
+beginchar(oct"244",7.75u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(0,2.25u#); right_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big right ceiling bracket";
+beginchar(oct"245",8.25u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(0,2.75u#); right_bracket(rule_thickness,true,false); endchar;
+
+cmchar "\big left curly brace";
+beginchar(oct"246",9.5u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(.875u#,.75u#); left_curly(hair,stem); endchar;
+
+cmchar "\big left curly brace";
+beginchar(oct"247",10.5u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(1.125u#,.75u#); left_curly(hair,stem); endchar;
+
+cmchar "\big left curly brace";
+beginchar(oct"250",11.5u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(1.375u#,.75u#); left_curly(hair,stem); endchar;
+
+cmchar "\big right curly brace";
+beginchar(oct"251",9.5u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(.875u#,.75u#); right_curly(hair,stem); endchar;
+
+cmchar "\big right curly brace";
+beginchar(oct"252",10.5u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(1.125u#,.75u#); right_curly(hair,stem); endchar;
+
+cmchar "\big right curly brace";
+beginchar(oct"253",11.5u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(1.375u#,.75u#); right_curly(hair,stem); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"254",8u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(.875u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"255",10u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(1.125u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"256",12u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(1.375u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"257",13u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"260",15u#,rule_thickness#,6dh#-rule_thickness#);
+adjust_fit(1.75u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"261",17u#,rule_thickness#,7dh#-rule_thickness#);
+adjust_fit(2u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"262",19u#,rule_thickness#,8dh#-rule_thickness#);
+adjust_fit(2.25u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"263",21u#,rule_thickness#,9dh#-rule_thickness#);
+adjust_fit(2.5u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"264",23u#,rule_thickness#,10dh#-rule_thickness#);
+adjust_fit(2.75u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big left angle bracket";
+beginchar(oct"265",25u#,rule_thickness#,11dh#-rule_thickness#);
+adjust_fit(3u#,.75u#); left_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"266",8u#,rule_thickness#,2.5dh#-rule_thickness#);
+adjust_fit(.875u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"267",10u#,rule_thickness#,3.5dh#-rule_thickness#);
+adjust_fit(1.125u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"270",12u#,rule_thickness#,4.5dh#-rule_thickness#);
+adjust_fit(1.375u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"271",13u#,rule_thickness#,5dh#-rule_thickness#);
+adjust_fit(1.5u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"272",15u#,rule_thickness#,6dh#-rule_thickness#);
+adjust_fit(1.75u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"273",17u#,rule_thickness#,7dh#-rule_thickness#);
+adjust_fit(2u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"274",19u#,rule_thickness#,8dh#-rule_thickness#);
+adjust_fit(2.25u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"275",21u#,rule_thickness#,9dh#-rule_thickness#);
+adjust_fit(2.5u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"276",23u#,rule_thickness#,10dh#-rule_thickness#);
+adjust_fit(2.75u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big right angle bracket";
+beginchar(oct"277",25u#,rule_thickness#,11dh#-rule_thickness#);
+adjust_fit(3u#,.75u#); right_angle(rule_thickness); endchar;
+
+cmchar "\big slash";
+beginchar(oct"300",12.5u#,rule_thickness#,2.5dh#-rule_thickness#);
+big_slash(rule_thickness+.4dw); endchar;
+
+cmchar "\big slash";
+beginchar(oct"301",16.7u#,rule_thickness#,3.5dh#-rule_thickness#);
+big_slash(rule_thickness+.8dw); endchar;
+
+cmchar "\big slash";
+beginchar(oct"302",20.9u#,rule_thickness#,4.5dh#-rule_thickness#);
+big_slash(rule_thickness+1.2dw); endchar;
+
+cmchar "\big slash";
+beginchar(oct"303",23u#,rule_thickness#,5dh#-rule_thickness#);
+big_slash(rule_thickness+1.4dw); endchar;
+
+cmchar "\big backslash";
+beginchar(oct"304",12.5u#,rule_thickness#,2.5dh#-rule_thickness#);
+big_blash(rule_thickness+.4dw); endchar;
+
+cmchar "\big backslash";
+beginchar(oct"305",16.7u#,rule_thickness#,3.5dh#-rule_thickness#);
+big_blash(rule_thickness+.8dw); endchar;
+
+cmchar "\big backslash";
+beginchar(oct"306",20.9u#,rule_thickness#,4.5dh#-rule_thickness#);
+big_blash(rule_thickness+1.2dw); endchar;
+
+cmchar "\big backslash";
+beginchar(oct"307",23u#,rule_thickness#,5dh#-rule_thickness#);
+big_blash(rule_thickness+1.4dw); endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"310",18u#,rule_thickness#,2.5dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"311",18u#,rule_thickness#,3.5dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"312",18u#,rule_thickness#,4.5dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"313",18u#,rule_thickness#,5dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"314",18u#,rule_thickness#,6dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"315",18u#,rule_thickness#,7dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"316",18u#,rule_thickness#,8dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"317",18u#,rule_thickness#,9dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"320",18u#,rule_thickness#,10dh#-rule_thickness#);
+big_sqrt; endchar;
+
+cmchar "\big radical sign";
+beginchar(oct"321",18u#,rule_thickness#,11dh#-rule_thickness#);
+big_sqrt; endchar;
+
+endinput;
+%    \begin{macrocode}
+%</mffilec>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*mffiled>
+%    \end{macrocode}
+% This file contains series of large accents for math extension fonts.
+% The sizes are `wide' (|10u#|), `wider' (|18u#|), and `widest' (|26u#|).
+% Character codes \0142--\0147 are generated.
+charlist oct"142": oct"322": oct"143": oct"323": oct"144":
+oct"324": oct"325": oct"326": oct"327": oct"330": oct"331": 
+oct"332": oct"333";  % circumflexes
+charlist oct"145": oct"334": oct"146": oct"335": oct"147":
+oct"336": oct"337": oct"340": oct"341": oct"342": oct"343":
+oct"344": oct"345";  % tildes
+charlist oct"346": oct"347": oct"350": oct"351": oct"352":
+oct"353": oct"354": oct"355": oct"356": oct"357": oct"360":
+oct"361": oct"362"; % triangles
+charlist oct"363": oct"364": oct"365": oct"366": oct"367": 
+oct"370": oct"371": oct"372": oct"373": oct"374": oct"375":
+oct"376": oct"377"; % hor parentheses
+
+numeric mikro; mikro=1.2(asc_height#-x_height#);
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"142",10u#,.5[asc_height#,body_height#],0);
+big_hat; endchar;
+
+cmchar "Wider circumflex (hat) accent";
+beginchar(oct"143",18u#,body_height#,0);
+big_hat; endchar;
+
+cmchar "Widest circumflex (hat) accent";
+beginchar(oct"144",26u#,body_height#+.1(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide tilde (squiggle) accent";
+beginchar(oct"145",10u#,.5[asc_height#,body_height#],0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"146",18u#,body_height#,0);
+big_tilde; endchar;
+
+cmchar "Widest tilde (squiggle) accent";
+beginchar(oct"147",26u#,body_height#+.1(mikro),0);
+big_tilde; endchar;
+
+%%%%%%% NEW STUFF (YH 1996-01-04)
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"322",14u#,body_height#,0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"323",22u#,body_height#+.05(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"324",30u#,body_height#+.15(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"325",38u#,body_height#+.2(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"326",46u#,body_height#+.25(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"327",54u#,body_height#+.3(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"330",62u#,body_height#+.35(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"331",70u#,body_height#+.4(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"332",78u#,body_height#+.45(mikro),0);
+big_hat; endchar;
+
+cmchar "Wide circumflex (hat) accent";
+beginchar(oct"333",86u#,body_height#+.5(mikro),0);
+big_hat; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"334",14u#,body_height#,0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"335",22u#,body_height#+.05(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"336",30u#,body_height#+.15(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"337",38u#,body_height#+.2(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"340",46u#,body_height#+.25(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"341",54u#,body_height#+.3(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"342",62u#,body_height#+.35(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"343",70u#,body_height#+.4(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"344",78u#,body_height#+.45(mikro),0);
+big_tilde; endchar;
+
+cmchar "Wider tilde (squiggle) accent";
+beginchar(oct"345",86u#,body_height#+.5(mikro),0);
+big_tilde; endchar;
+
+def big_triangle_accent =
+adjust_fit(0,0);
+pickup pencircle scaled .2[vair,stem];
+top y2 = h+o; x2 = .5w; x1=w-x3=good.x-eps;
+y1=y3=.5[x_height,y2]; draw z1--z2--z3--z1;
+penlabels(1,2,3); enddef;
+
+cmchar "Wide triangle accent";
+beginchar(oct"346",10u#,body_height#,0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"347",14u#,body_height#,0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"350",18u#,body_height#,0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"351",22u#,body_height#+.05(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"352",26u#,body_height#+.1(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"353",30u#,body_height#+.15(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"354",38u#,body_height#+.2(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"355",46u#,body_height#+.25(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"356",54u#,body_height#+.3(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"357",62u#,body_height#+.35(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"360",70u#,body_height#+.4(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"361",78u#,body_height#+.45(mikro),0);
+big_triangle_accent; endchar;
+
+cmchar "Wide triangle accent";
+beginchar(oct"362",86u#,body_height#+.5(mikro),0);
+big_triangle_accent; endchar;
+
+def big_hor_paren_accent(expr max_breadth) =
+ adjust_fit(0,0); pickup crisp.nib;
+ numeric theta; 
+ theta=angle((.5w,h+.5(asc_height-x_height))-(0,.5[x_height,asc_height]));
+ numeric mid_width; mid_width=.4[vair,stem];
+ pos1(vair,theta-90); pos2(vair,theta-90);
+ pos3(vair,-theta-90); pos4(vair,-theta-90);
+ z2-z1=(mid_width-crisp)*dir theta;
+ z4-z3=(mid_width-crisp)*dir(-theta);
+ pos5(vround max_breadth,-90);
+ lft x1r=w-rt x4l=0; top y5l=h; y1=y4; x5=.5w;
+ y1=vround(.5[x_height,asc_height]);
+ filldraw stroke z1e---z2e...z5e{right}...z3e---z4e;  % stroke
+ penlabels(1,2,3,4,5); enddef;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"363",10u#,body_height#,0);
+big_hor_paren_accent(.5[stem,bold]); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"364",14u#,body_height#,0);
+big_hor_paren_accent(.75[stem,bold]); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"365",18u#,body_height#,0);
+big_hor_paren_accent(bold); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"366",22u#,body_height#+.05(mikro),0);
+big_hor_paren_accent(bold+.25dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"367",26u#,body_height#+.1(mikro),0);
+big_hor_paren_accent(bold+.5dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"370",30u#,body_height#+.15(mikro),0);
+big_hor_paren_accent(bold+.75dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"371",38u#,body_height#+.2(mikro),0);
+big_hor_paren_accent(bold+dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"372",46u#,body_height#+.25(mikro),0);
+big_hor_paren_accent(bold+1.25dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"373",54u#,body_height#+.3(mikro),0);
+big_hor_paren_accent(bold+1.5dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"374",62u#,body_height#+.35(mikro),0);
+big_hor_paren_accent(bold+1.75dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"375",70u#,body_height#+.4(mikro),0);
+big_hor_paren_accent(bold+1.75dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"376",78u#,body_height#+.45(mikro),0);
+big_hor_paren_accent(bold+1.75dw); endchar;
+
+cmchar "Wide horizontal parenthesis accent";
+beginchar(oct"377",86u#,body_height#+.5(mikro),0);
+big_hor_paren_accent(bold+1.75dw); endchar;
+
+endinput;
+%    \begin{macrocode}
+%</mffiled>
+%    \end{macrocode}
+%    \begin{macrocode}
+%<*mapfile>
+%    \end{macrocode}
+%
+yrcmex10 Yhcmex <yhcmex.pfb
+%    \begin{macrocode}
+%</mapfile>
+%    \end{macrocode}
+% The following virtual property list file merges the two fonts
+% yrcmex10 and cmex10 to provide a font yhcmex10 that can be fully used
+% as replacement for cmex10.
+%    \begin{macrocode}
+%<*vplfile>
+%    \end{macrocode}
+(VTITLE )
+(FAMILY YHCMEX)
+(FACE O 352)
+(CODINGSCHEME TEX MATH EXTENSION)
+(DESIGNSIZE R 10.0)
+(COMMENT DESIGNSIZE IS IN POINTS)
+(COMMENT OTHER SIZES ARE MULTIPLES OF DESIGNSIZE)
+(CHECKSUM O 16003002643)
+(FONTDIMEN
+   (SLANT R 0.0)
+   (SPACE R 0.0)
+   (STRETCH R 0.0)
+   (SHRINK R 0.0)
+   (XHEIGHT R 0.430555)
+   (QUAD R 1.000003)
+   (EXTRASPACE R 0.0)
+   (DEFAULTRULETHICKNESS R 0.039999)
+   (BIGOPSPACING1 R 0.111112)
+   (BIGOPSPACING2 R 0.166667)
+   (BIGOPSPACING3 R 0.2)
+   (BIGOPSPACING4 R 0.6)
+   (BIGOPSPACING5 R 0.1)
+   )
+(MAPFONT D 0
+   (FONTNAME cmex10)
+   (FONTCHECKSUM O 37254272422)
+   (FONTAT R 1.0)
+   (FONTDSIZE R 10.0)
+   )
+(MAPFONT D 1
+   (FONTNAME yrcmex10)
+   (FONTCHECKSUM O 16003002643)
+   (FONTAT R 1.0)
+   (FONTDSIZE R 10.0)
+   )
+(CHARACTER O 0
+   (CHARWD R 0.458336)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 200)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 1
+   (CHARWD R 0.458336)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 212)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 1)
+      )
+   )
+(CHARACTER O 2
+   (CHARWD R 0.416669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 224)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 2)
+      )
+   )
+(CHARACTER O 3
+   (CHARWD R 0.416669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 227)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 3)
+      )
+   )
+(CHARACTER O 4
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 232)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 4)
+      )
+   )
+(CHARACTER O 5
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 235)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 5)
+      )
+   )
+(CHARACTER O 6
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 240)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 6)
+      )
+   )
+(CHARACTER O 7
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 243)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 7)
+      )
+   )
+(CHARACTER O 10
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 246)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 10)
+      )
+   )
+(CHARACTER O 11
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 251)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 11)
+      )
+   )
+(CHARACTER O 12
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 254)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 12)
+      )
+   )
+(CHARACTER O 13
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 266)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 13)
+      )
+   )
+(CHARACTER O 14
+   (CHARWD R 0.333334)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (REP O 14)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 14)
+      )
+   )
+(CHARACTER O 15
+   (CHARWD R 0.555557)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (REP O 15)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 15)
+      )
+   )
+(CHARACTER O 16
+   (CHARWD R 0.577779)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 300)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 16)
+      )
+   )
+(CHARACTER O 17
+   (CHARWD R 0.577779)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 304)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 17)
+      )
+   )
+(CHARACTER O 20
+   (CHARWD R 0.597224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 201)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 20)
+      )
+   )
+(CHARACTER O 21
+   (CHARWD R 0.597224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 213)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 21)
+      )
+   )
+(CHARACTER O 22
+   (CHARWD R 0.7361145)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 202)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 22)
+      )
+   )
+(CHARACTER O 23
+   (CHARWD R 0.7361145)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 214)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 23)
+      )
+   )
+(CHARACTER O 24
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 226)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 24)
+      )
+   )
+(CHARACTER O 25
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 231)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 25)
+      )
+   )
+(CHARACTER O 26
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 234)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.05)
+      (SETCHAR O 26)
+      (MOVEDOWN R 0.05)
+      )
+   )
+(CHARACTER O 27
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 237)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.05)
+      (SETCHAR O 27)
+      (MOVEDOWN R 0.05)
+      )
+   )
+(CHARACTER O 30
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 242)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.05)
+      (SETCHAR O 30)
+      (MOVEDOWN R -0.05)
+      )
+   )
+(CHARACTER O 31
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 245)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.05)
+      (SETCHAR O 31)
+      (MOVEDOWN R -0.05)
+      )
+   )
+(CHARACTER O 32
+   (CHARWD R 0.750002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 250)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 32)
+      )
+   )
+(CHARACTER O 33
+   (CHARWD R 0.750002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 253)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 33)
+      )
+   )
+(CHARACTER O 34
+   (CHARWD R 0.750002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 256)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 34)
+      )
+   )
+(CHARACTER O 35
+   (CHARWD R 0.750002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 270)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 35)
+      )
+   )
+(CHARACTER O 36
+   (CHARWD R 1.044447)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 302)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 36)
+      )
+   )
+(CHARACTER O 37
+   (CHARWD R 1.044447)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 306)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 37)
+      )
+   )
+(CHARACTER O 40
+   (CHARWD R 0.79167)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 203)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 40)
+      )
+   )
+(CHARACTER O 41
+   (CHARWD R 0.79167)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 215)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 41)
+      )
+   )
+(CHARACTER O 42
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 62)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 42)
+      )
+   )
+(CHARACTER O 43
+   (CHARWD R 0.583336)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 63)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 43)
+      )
+   )
+(CHARACTER O 44
+   (CHARWD R 0.638891)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 64)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.05)
+      (SETCHAR O 44)
+      (MOVEDOWN R 0.05)
+      )
+   )
+(CHARACTER O 45
+   (CHARWD R 0.638891)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 65)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.05)
+      (SETCHAR O 45)
+      (MOVEDOWN R 0.05)
+      )
+   )
+(CHARACTER O 46
+   (CHARWD R 0.638891)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 66)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.05)
+      (SETCHAR O 46)
+      (MOVEDOWN R -0.05)
+      )
+   )
+(CHARACTER O 47
+   (CHARWD R 0.638891)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 67)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.05)
+      (SETCHAR O 47)
+      (MOVEDOWN R -0.05)
+      )
+   )
+(CHARACTER O 50
+   (CHARWD R 0.80556)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 70)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 50)
+      )
+   )
+(CHARACTER O 51
+   (CHARWD R 0.80556)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 71)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 51)
+      )
+   )
+(CHARACTER O 52
+   (CHARWD R 0.80556)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 257)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 52)
+      )
+   )
+(CHARACTER O 53
+   (CHARWD R 0.80556)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 271)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 53)
+      )
+   )
+(CHARACTER O 54
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 303)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 54)
+      )
+   )
+(CHARACTER O 55
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 307)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 55)
+      )
+   )
+(CHARACTER O 56
+   (CHARWD R 0.811114)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 301)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 56)
+      )
+   )
+(CHARACTER O 57
+   (CHARWD R 0.811114)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 305)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 57)
+      )
+   )
+(CHARACTER O 60
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 60)
+      (BOT O 100)
+      (REP O 102)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 60)
+      )
+   )
+(CHARACTER O 61
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 61)
+      (BOT O 101)
+      (REP O 103)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 61)
+      )
+   )
+(CHARACTER O 62
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 62)
+      (BOT O 64)
+      (REP O 66)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.03)
+      (SETCHAR O 62)
+      (MOVEDOWN R -0.03)
+      )
+   )
+(CHARACTER O 63
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 63)
+      (BOT O 65)
+      (REP O 67)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.03)
+      (SETCHAR O 63)
+      (MOVEDOWN R -0.03)
+      )
+   )
+(CHARACTER O 64
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (BOT O 64)
+      (REP O 66)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.03)
+      (SETCHAR O 64)
+      (MOVEDOWN R 0.03)
+      )
+   )
+(CHARACTER O 65
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (BOT O 65)
+      (REP O 67)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.03)
+      (SETCHAR O 65)
+      (MOVEDOWN R 0.03)
+      )
+   )
+(CHARACTER O 66
+   (CHARWD R 0.666669)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 62)
+      (REP O 66)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 66)
+      )
+   )
+(CHARACTER O 67
+   (CHARWD R 0.666669)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 63)
+      (REP O 67)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 67)
+      )
+   )
+(CHARACTER O 70
+   (CHARWD R 0.888891)
+   (CHARDP R 0.900011)
+   (VARCHAR
+      (TOP O 70)
+      (MID O 74)
+      (BOT O 72)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 70)
+      )
+   )
+(CHARACTER O 71
+   (CHARWD R 0.888891)
+   (CHARDP R 0.900011)
+   (VARCHAR
+      (TOP O 71)
+      (MID O 75)
+      (BOT O 73)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 71)
+      )
+   )
+(CHARACTER O 72
+   (CHARWD R 0.888891)
+   (CHARDP R 0.900011)
+   (VARCHAR
+      (TOP O 70)
+      (BOT O 72)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 72)
+      )
+   )
+(CHARACTER O 73
+   (CHARWD R 0.888891)
+   (CHARDP R 0.900011)
+   (VARCHAR
+      (TOP O 71)
+      (BOT O 73)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 73)
+      )
+   )
+(CHARACTER O 74
+   (CHARWD R 0.888891)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (REP O 77)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 74)
+      )
+   )
+(CHARACTER O 75
+   (CHARWD R 0.888891)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (REP O 167)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 75)
+      )
+   )
+(CHARACTER O 76
+   (CHARWD R 0.888891)
+   (CHARDP R 0.300003)
+   (VARCHAR
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 76)
+      )
+   )
+(CHARACTER O 77
+   (CHARWD R 0.666669)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 170)
+      (BOT O 171)
+      (REP O 77)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 77)
+      )
+   )
+(CHARACTER O 100
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 70)
+      (BOT O 73)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 100)
+      )
+   )
+(CHARACTER O 101
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 71)
+      (BOT O 72)
+      (REP O 76)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 101)
+      )
+   )
+(CHARACTER O 102
+   (CHARWD R 0.875003)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (REP O 102)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 102)
+      )
+   )
+(CHARACTER O 103
+   (CHARWD R 0.875003)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (REP O 103)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 103)
+      )
+   )
+(CHARACTER O 104
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 255)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 104)
+      )
+   )
+(CHARACTER O 105
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 267)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 105)
+      )
+   )
+(CHARACTER O 106
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 107)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 106)
+      )
+   )
+(CHARACTER O 107
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 107)
+      )
+   )
+(CHARACTER O 110
+   (CHARWD R 0.472223)
+   (CHARDP R 1.135568)
+   (CHARIC R 0.194446)
+   (NEXTLARGER O 111)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 110)
+      )
+   )
+(CHARACTER O 111
+   (CHARWD R 0.555557)
+   (CHARDP R 2.250579)
+   (CHARIC R 0.444446)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 111)
+      )
+   )
+(CHARACTER O 112
+   (CHARWD R 1.1111145)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 113)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 112)
+      )
+   )
+(CHARACTER O 113
+   (CHARWD R 1.511116)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 113)
+      )
+   )
+(CHARACTER O 114
+   (CHARWD R 1.1111145)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 115)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 114)
+      )
+   )
+(CHARACTER O 115
+   (CHARWD R 1.511116)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 115)
+      )
+   )
+(CHARACTER O 116
+   (CHARWD R 1.1111145)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 117)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 116)
+      )
+   )
+(CHARACTER O 117
+   (CHARWD R 1.511116)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 117)
+      )
+   )
+(CHARACTER O 120
+   (CHARWD R 1.055559)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 130)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 120)
+      )
+   )
+(CHARACTER O 121
+   (CHARWD R 0.9444475)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 131)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 121)
+      )
+   )
+(CHARACTER O 122
+   (CHARWD R 0.472223)
+   (CHARDP R 1.135568)
+   (CHARIC R 0.194446)
+   (NEXTLARGER O 132)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 122)
+      )
+   )
+(CHARACTER O 123
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 133)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 123)
+      )
+   )
+(CHARACTER O 124
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 134)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 124)
+      )
+   )
+(CHARACTER O 125
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 135)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 125)
+      )
+   )
+(CHARACTER O 126
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 136)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 126)
+      )
+   )
+(CHARACTER O 127
+   (CHARWD R 0.833336)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 137)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 127)
+      )
+   )
+(CHARACTER O 130
+   (CHARWD R 1.444448)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 130)
+      )
+   )
+(CHARACTER O 131
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 131)
+      )
+   )
+(CHARACTER O 132
+   (CHARWD R 0.555557)
+   (CHARDP R 2.250579)
+   (CHARIC R 0.444446)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 132)
+      )
+   )
+(CHARACTER O 133
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 133)
+      )
+   )
+(CHARACTER O 134
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 134)
+      )
+   )
+(CHARACTER O 135
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 135)
+      )
+   )
+(CHARACTER O 136
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 136)
+      )
+   )
+(CHARACTER O 137
+   (CHARWD R 1.1111145)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 137)
+      )
+   )
+(CHARACTER O 140
+   (CHARWD R 0.9444475)
+   (CHARDP R 0.900011)
+   (NEXTLARGER O 141)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 140)
+      )
+   )
+(CHARACTER O 141
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.100001)
+   (CHARDP R 1.490013)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 141)
+      )
+   )
+(CHARACTER O 142
+   (CHARWD R 0.555557)
+   (CHARHT R 0.722223)
+   (NEXTLARGER O 322)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 142)
+      )
+   )
+(CHARACTER O 143
+   (CHARWD R 1.000003)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 323)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 143)
+      )
+   )
+(CHARACTER O 144
+   (CHARWD R 1.444448)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 324)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 144)
+      )
+   )
+(CHARACTER O 145
+   (CHARWD R 0.555557)
+   (CHARHT R 0.722223)
+   (NEXTLARGER O 334)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 145)
+      )
+   )
+(CHARACTER O 146
+   (CHARWD R 1.000003)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 335)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 146)
+      )
+   )
+(CHARACTER O 147
+   (CHARWD R 1.444448)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 336)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 147)
+      )
+   )
+(CHARACTER O 150
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 225)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 150)
+      )
+   )
+(CHARACTER O 151
+   (CHARWD R 0.472224)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 230)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 151)
+      )
+   )
+(CHARACTER O 152
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 233)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.03)
+      (SETCHAR O 152)
+      (MOVEDOWN R 0.03)
+      )
+   )
+(CHARACTER O 153
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 236)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R -0.03)
+      (SETCHAR O 153)
+      (MOVEDOWN R 0.03)
+      )
+   )
+(CHARACTER O 154
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 241)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.03)
+      (SETCHAR O 154)
+      (MOVEDOWN R -0.03)
+      )
+   )
+(CHARACTER O 155
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 244)
+   (MAP
+      (SELECTFONT D 0)
+      (MOVEDOWN R 0.03)
+      (SETCHAR O 155)
+      (MOVEDOWN R -0.03)
+      )
+   )
+(CHARACTER O 156
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 247)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 156)
+      )
+   )
+(CHARACTER O 157
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 252)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 157)
+      )
+   )
+(CHARACTER O 160
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.135568)
+   (NEXTLARGER O 310)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 160)
+      )
+   )
+(CHARACTER O 161
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.780019)
+   (NEXTLARGER O 311)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 161)
+      )
+   )
+(CHARACTER O 162
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 312)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 162)
+      )
+   )
+(CHARACTER O 163
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 313)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 163)
+      )
+   )
+(CHARACTER O 164
+   (CHARWD R 1.055559)
+   (CHARDP R 1.780019)
+   (VARCHAR
+      (TOP O 166)
+      (BOT O 164)
+      (REP O 165)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 164)
+      )
+   )
+(CHARACTER O 165
+   (CHARWD R 1.055559)
+   (CHARDP R 0.580007)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 165)
+      )
+   )
+(CHARACTER O 166
+   (CHARWD R 1.055559)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.580007)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 166)
+      )
+   )
+(CHARACTER O 167
+   (CHARWD R 0.777781)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 176)
+      (BOT O 177)
+      (REP O 167)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 167)
+      )
+   )
+(CHARACTER O 170
+   (CHARWD R 0.666669)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 170)
+      (REP O 77)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 170)
+      )
+   )
+(CHARACTER O 171
+   (CHARWD R 0.666669)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (BOT O 171)
+      (REP O 77)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 171)
+      )
+   )
+(CHARACTER O 172
+   (CHARWD R 0.450005)
+   (CHARHT R 0.119998)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 172)
+      )
+   )
+(CHARACTER O 173
+   (CHARWD R 0.450005)
+   (CHARHT R 0.119998)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 173)
+      )
+   )
+(CHARACTER O 174
+   (CHARWD R 0.450005)
+   (CHARHT R 0.119998)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 174)
+      )
+   )
+(CHARACTER O 175
+   (CHARWD R 0.450005)
+   (CHARHT R 0.119998)
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 175)
+      )
+   )
+(CHARACTER O 176
+   (CHARWD R 0.777781)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (TOP O 176)
+      (REP O 167)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 176)
+      )
+   )
+(CHARACTER O 177
+   (CHARWD R 0.777781)
+   (CHARDP R 0.580007)
+   (VARCHAR
+      (BOT O 177)
+      (REP O 167)
+      )
+   (MAP
+      (SELECTFONT D 0)
+      (SETCHAR O 177)
+      )
+   )
+(CHARACTER O 200
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 20)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 200)
+      )
+   )
+(CHARACTER O 201
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 22)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 201)
+      )
+   )
+(CHARACTER O 202
+   (CHARWD R 0.805559)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 40)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 202)
+      )
+   )
+(CHARACTER O 203
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 204)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 203)
+      )
+   )
+(CHARACTER O 204
+   (CHARWD R 1.013893)
+   (CHARHT R 0.039999)
+   (CHARDP R 3.560038)
+   (NEXTLARGER O 205)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 204)
+      )
+   )
+(CHARACTER O 205
+   (CHARWD R 1.1527815)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.160044)
+   (NEXTLARGER O 206)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 205)
+      )
+   )
+(CHARACTER O 206
+   (CHARWD R 1.291672)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.76005)
+   (NEXTLARGER O 207)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 206)
+      )
+   )
+(CHARACTER O 207
+   (CHARWD R 1.43056)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.360056)
+   (NEXTLARGER O 210)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 207)
+      )
+   )
+(CHARACTER O 210
+   (CHARWD R 1.56945)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.960062)
+   (NEXTLARGER O 211)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 210)
+      )
+   )
+(CHARACTER O 211
+   (CHARWD R 1.708339)
+   (CHARHT R 0.039999)
+   (CHARDP R 6.560068)
+   (NEXTLARGER O 60)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 211)
+      )
+   )
+(CHARACTER O 212
+   (CHARWD R 0.527781)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 21)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 212)
+      )
+   )
+(CHARACTER O 213
+   (CHARWD R 0.666669)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 23)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 213)
+      )
+   )
+(CHARACTER O 214
+   (CHARWD R 0.805559)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 41)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 214)
+      )
+   )
+(CHARACTER O 215
+   (CHARWD R 0.875003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 216)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 215)
+      )
+   )
+(CHARACTER O 216
+   (CHARWD R 1.013893)
+   (CHARHT R 0.039999)
+   (CHARDP R 3.560038)
+   (NEXTLARGER O 217)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 216)
+      )
+   )
+(CHARACTER O 217
+   (CHARWD R 1.1527815)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.160044)
+   (NEXTLARGER O 220)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 217)
+      )
+   )
+(CHARACTER O 220
+   (CHARWD R 1.291672)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.76005)
+   (NEXTLARGER O 221)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 220)
+      )
+   )
+(CHARACTER O 221
+   (CHARWD R 1.43056)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.360056)
+   (NEXTLARGER O 222)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 221)
+      )
+   )
+(CHARACTER O 222
+   (CHARWD R 1.56945)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.960062)
+   (NEXTLARGER O 223)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 222)
+      )
+   )
+(CHARACTER O 223
+   (CHARWD R 1.708339)
+   (CHARHT R 0.039999)
+   (CHARDP R 6.560068)
+   (NEXTLARGER O 61)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 223)
+      )
+   )
+(CHARACTER O 224
+   (CHARWD R 0.444446)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 150)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 224)
+      )
+   )
+(CHARACTER O 225
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 24)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 225)
+      )
+   )
+(CHARACTER O 226
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 42)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 226)
+      )
+   )
+(CHARACTER O 227
+   (CHARWD R 0.444446)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 151)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 227)
+      )
+   )
+(CHARACTER O 230
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 25)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 230)
+      )
+   )
+(CHARACTER O 231
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 43)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 231)
+      )
+   )
+(CHARACTER O 232
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 152)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 232)
+      )
+   )
+(CHARACTER O 233
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 26)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 233)
+      )
+   )
+(CHARACTER O 234
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 44)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 234)
+      )
+   )
+(CHARACTER O 235
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 153)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 235)
+      )
+   )
+(CHARACTER O 236
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 27)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 236)
+      )
+   )
+(CHARACTER O 237
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 45)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 237)
+      )
+   )
+(CHARACTER O 240
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 154)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 240)
+      )
+   )
+(CHARACTER O 241
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 30)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 241)
+      )
+   )
+(CHARACTER O 242
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 46)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 242)
+      )
+   )
+(CHARACTER O 243
+   (CHARWD R 0.500002)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 155)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 243)
+      )
+   )
+(CHARACTER O 244
+   (CHARWD R 0.555557)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 31)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 244)
+      )
+   )
+(CHARACTER O 245
+   (CHARWD R 0.611113)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 47)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 245)
+      )
+   )
+(CHARACTER O 246
+   (CHARWD R 0.618059)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 156)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 246)
+      )
+   )
+(CHARACTER O 247
+   (CHARWD R 0.687503)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 32)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 247)
+      )
+   )
+(CHARACTER O 250
+   (CHARWD R 0.7569475)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 50)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 250)
+      )
+   )
+(CHARACTER O 251
+   (CHARWD R 0.618059)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 157)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 251)
+      )
+   )
+(CHARACTER O 252
+   (CHARWD R 0.687503)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 33)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 252)
+      )
+   )
+(CHARACTER O 253
+   (CHARWD R 0.7569475)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 51)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 253)
+      )
+   )
+(CHARACTER O 254
+   (CHARWD R 0.534724)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 104)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 254)
+      )
+   )
+(CHARACTER O 255
+   (CHARWD R 0.659724)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 34)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 255)
+      )
+   )
+(CHARACTER O 256
+   (CHARWD R 0.784724)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 52)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 256)
+      )
+   )
+(CHARACTER O 257
+   (CHARWD R 0.847226)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 260)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 257)
+      )
+   )
+(CHARACTER O 260
+   (CHARWD R 0.972226)
+   (CHARHT R 0.039999)
+   (CHARDP R 3.560038)
+   (NEXTLARGER O 261)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 260)
+      )
+   )
+(CHARACTER O 261
+   (CHARWD R 1.097226)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.160044)
+   (NEXTLARGER O 262)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 261)
+      )
+   )
+(CHARACTER O 262
+   (CHARWD R 1.222226)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.76005)
+   (NEXTLARGER O 263)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 262)
+      )
+   )
+(CHARACTER O 263
+   (CHARWD R 1.347227)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.360056)
+   (NEXTLARGER O 264)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 263)
+      )
+   )
+(CHARACTER O 264
+   (CHARWD R 1.472227)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.960062)
+   (NEXTLARGER O 265)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 264)
+      )
+   )
+(CHARACTER O 265
+   (CHARWD R 1.597227)
+   (CHARHT R 0.039999)
+   (CHARDP R 6.560068)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 265)
+      )
+   )
+(CHARACTER O 266
+   (CHARWD R 0.534724)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 105)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 266)
+      )
+   )
+(CHARACTER O 267
+   (CHARWD R 0.659724)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 35)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 267)
+      )
+   )
+(CHARACTER O 270
+   (CHARWD R 0.784724)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 53)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 270)
+      )
+   )
+(CHARACTER O 271
+   (CHARWD R 0.847226)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 272)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 271)
+      )
+   )
+(CHARACTER O 272
+   (CHARWD R 0.972226)
+   (CHARHT R 0.039999)
+   (CHARDP R 3.560038)
+   (NEXTLARGER O 273)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 272)
+      )
+   )
+(CHARACTER O 273
+   (CHARWD R 1.097226)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.160044)
+   (NEXTLARGER O 274)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 273)
+      )
+   )
+(CHARACTER O 274
+   (CHARWD R 1.222226)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.76005)
+   (NEXTLARGER O 275)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 274)
+      )
+   )
+(CHARACTER O 275
+   (CHARWD R 1.347227)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.360056)
+   (NEXTLARGER O 276)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 275)
+      )
+   )
+(CHARACTER O 276
+   (CHARWD R 1.472227)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.960062)
+   (NEXTLARGER O 277)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 276)
+      )
+   )
+(CHARACTER O 277
+   (CHARWD R 1.597227)
+   (CHARHT R 0.039999)
+   (CHARDP R 6.560068)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 277)
+      )
+   )
+(CHARACTER O 300
+   (CHARWD R 0.6944475)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 56)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 300)
+      )
+   )
+(CHARACTER O 301
+   (CHARWD R 0.92778)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 36)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 301)
+      )
+   )
+(CHARACTER O 302
+   (CHARWD R 1.161115)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 54)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 302)
+      )
+   )
+(CHARACTER O 303
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 303)
+      )
+   )
+(CHARACTER O 304
+   (CHARWD R 0.6944475)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 57)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 304)
+      )
+   )
+(CHARACTER O 305
+   (CHARWD R 0.92778)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 37)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 305)
+      )
+   )
+(CHARACTER O 306
+   (CHARWD R 1.161115)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 55)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 306)
+      )
+   )
+(CHARACTER O 307
+   (CHARWD R 1.2777815)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 307)
+      )
+   )
+(CHARACTER O 310
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.490013)
+   (NEXTLARGER O 161)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 310)
+      )
+   )
+(CHARACTER O 311
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.250579)
+   (NEXTLARGER O 162)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 311)
+      )
+   )
+(CHARACTER O 312
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.660028)
+   (NEXTLARGER O 163)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 312)
+      )
+   )
+(CHARACTER O 313
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 2.9600315)
+   (NEXTLARGER O 314)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 313)
+      )
+   )
+(CHARACTER O 314
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 3.560038)
+   (NEXTLARGER O 315)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 314)
+      )
+   )
+(CHARACTER O 315
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.160044)
+   (NEXTLARGER O 316)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 315)
+      )
+   )
+(CHARACTER O 316
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 4.76005)
+   (NEXTLARGER O 317)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 316)
+      )
+   )
+(CHARACTER O 317
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.360056)
+   (NEXTLARGER O 320)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 317)
+      )
+   )
+(CHARACTER O 320
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 5.960062)
+   (NEXTLARGER O 321)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 320)
+      )
+   )
+(CHARACTER O 321
+   (CHARWD R 1.000003)
+   (CHARHT R 0.039999)
+   (CHARDP R 6.560068)
+   (NEXTLARGER O 164)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 321)
+      )
+   )
+(CHARACTER O 322
+   (CHARWD R 0.777781)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 143)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 322)
+      )
+   )
+(CHARACTER O 323
+   (CHARWD R 1.222226)
+   (CHARHT R 0.765834)
+   (NEXTLARGER O 144)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 323)
+      )
+   )
+(CHARACTER O 324
+   (CHARWD R 1.666672)
+   (CHARHT R 0.797498)
+   (NEXTLARGER O 325)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 324)
+      )
+   )
+(CHARACTER O 325
+   (CHARWD R 2.111117)
+   (CHARHT R 0.813332)
+   (NEXTLARGER O 326)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 325)
+      )
+   )
+(CHARACTER O 326
+   (CHARWD R 2.555563)
+   (CHARHT R 0.829167)
+   (NEXTLARGER O 327)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 326)
+      )
+   )
+(CHARACTER O 327
+   (CHARWD R 3.00001)
+   (CHARHT R 0.845001)
+   (NEXTLARGER O 330)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 327)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 330
+   (CHARWD R 3.444455)
+   (CHARHT R 0.860835)
+   (NEXTLARGER O 331)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 330)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 331
+   (CHARWD R 3.888901)
+   (CHARHT R 0.876665)
+   (NEXTLARGER O 332)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 331)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 332
+   (CHARWD R 4.333346)
+   (CHARHT R 0.892499)
+   (NEXTLARGER O 333)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 332)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 333
+   (CHARWD R 4.777792)
+   (CHARHT R 0.908333)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 333)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 334
+   (CHARWD R 0.777781)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 146)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 334)
+      )
+   )
+(CHARACTER O 335
+   (CHARWD R 1.222226)
+   (CHARHT R 0.765834)
+   (NEXTLARGER O 147)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 335)
+      )
+   )
+(CHARACTER O 336
+   (CHARWD R 1.666672)
+   (CHARHT R 0.797498)
+   (NEXTLARGER O 337)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 336)
+      )
+   )
+(CHARACTER O 337
+   (CHARWD R 2.111117)
+   (CHARHT R 0.813332)
+   (NEXTLARGER O 340)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 337)
+      )
+   )
+(CHARACTER O 340
+   (CHARWD R 2.555563)
+   (CHARHT R 0.829167)
+   (NEXTLARGER O 341)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 340)
+      )
+   )
+(CHARACTER O 341
+   (CHARWD R 3.00001)
+   (CHARHT R 0.845001)
+   (NEXTLARGER O 342)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 341)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 342
+   (CHARWD R 3.444455)
+   (CHARHT R 0.860835)
+   (NEXTLARGER O 343)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 342)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 343
+   (CHARWD R 3.888901)
+   (CHARHT R 0.876665)
+   (NEXTLARGER O 344)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 343)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 344
+   (CHARWD R 4.333346)
+   (CHARHT R 0.892499)
+   (NEXTLARGER O 345)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 344)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 345
+   (CHARWD R 4.777792)
+   (CHARHT R 0.908333)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 345)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 346
+   (CHARWD R 0.555557)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 347)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 346)
+      )
+   )
+(CHARACTER O 347
+   (CHARWD R 0.777781)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 350)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 347)
+      )
+   )
+(CHARACTER O 350
+   (CHARWD R 1.000003)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 351)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 350)
+      )
+   )
+(CHARACTER O 351
+   (CHARWD R 1.222226)
+   (CHARHT R 0.765834)
+   (NEXTLARGER O 352)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 351)
+      )
+   )
+(CHARACTER O 352
+   (CHARWD R 1.444448)
+   (CHARHT R 0.781668)
+   (NEXTLARGER O 353)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 352)
+      )
+   )
+(CHARACTER O 353
+   (CHARWD R 1.666672)
+   (CHARHT R 0.797498)
+   (NEXTLARGER O 354)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 353)
+      )
+   )
+(CHARACTER O 354
+   (CHARWD R 2.111117)
+   (CHARHT R 0.813332)
+   (NEXTLARGER O 355)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 354)
+      )
+   )
+(CHARACTER O 355
+   (CHARWD R 2.555563)
+   (CHARHT R 0.829167)
+   (NEXTLARGER O 356)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 355)
+      )
+   )
+(CHARACTER O 356
+   (CHARWD R 3.00001)
+   (CHARHT R 0.845001)
+   (NEXTLARGER O 357)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 356)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 357
+   (CHARWD R 3.444455)
+   (CHARHT R 0.860835)
+   (NEXTLARGER O 360)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 357)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 360
+   (CHARWD R 3.888901)
+   (CHARHT R 0.876665)
+   (NEXTLARGER O 361)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 360)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 361
+   (CHARWD R 4.333346)
+   (CHARHT R 0.892499)
+   (NEXTLARGER O 362)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 361)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 362
+   (CHARWD R 4.777792)
+   (CHARHT R 0.908333)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 362)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 363
+   (CHARWD R 0.555557)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 364)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 363)
+      )
+   )
+(CHARACTER O 364
+   (CHARWD R 0.777781)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 365)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 364)
+      )
+   )
+(CHARACTER O 365
+   (CHARWD R 1.000003)
+   (CHARHT R 0.75)
+   (NEXTLARGER O 366)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 365)
+      )
+   )
+(CHARACTER O 366
+   (CHARWD R 1.222226)
+   (CHARHT R 0.765834)
+   (NEXTLARGER O 367)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 366)
+      )
+   )
+(CHARACTER O 367
+   (CHARWD R 1.444448)
+   (CHARHT R 0.781668)
+   (NEXTLARGER O 370)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 367)
+      )
+   )
+(CHARACTER O 370
+   (CHARWD R 1.666672)
+   (CHARHT R 0.797498)
+   (NEXTLARGER O 371)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 370)
+      )
+   )
+(CHARACTER O 371
+   (CHARWD R 2.111117)
+   (CHARHT R 0.813332)
+   (NEXTLARGER O 372)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 371)
+      )
+   )
+(CHARACTER O 372
+   (CHARWD R 2.555563)
+   (CHARHT R 0.829167)
+   (NEXTLARGER O 373)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 372)
+      )
+   )
+(CHARACTER O 373
+   (CHARWD R 3.00001)
+   (CHARHT R 0.845001)
+   (NEXTLARGER O 374)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 373)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 374
+   (CHARWD R 3.444455)
+   (CHARHT R 0.860835)
+   (NEXTLARGER O 375)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 374)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 375
+   (CHARWD R 3.888901)
+   (CHARHT R 0.876665)
+   (NEXTLARGER O 376)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 375)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 376
+   (CHARWD R 4.333346)
+   (CHARHT R 0.892499)
+   (NEXTLARGER O 377)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 376)
+      (SETCHAR O 0)
+      )
+   )
+(CHARACTER O 377
+   (CHARWD R 4.777792)
+   (CHARHT R 0.908333)
+   (MAP
+      (SELECTFONT D 1)
+      (SETCHAR O 377)
+      (SETCHAR O 0)
+      )
+   )
+%    \begin{macrocode}
+%</vplfile>
+%    \end{macrocode}
+% \Finale
+%

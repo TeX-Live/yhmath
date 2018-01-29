@@ -1,0 +1,37 @@
+README for yhmath
+
+This package contains the yhmath fonts and support files from
+Yannis Haralambous, as well as the PostScript Type1 version of
+the fonts.
+
+It merges two former CTAN packages:
+macros/latex/contrib/yhmath and fonts/yhmath
+
+See the included pdf files for more details on changes.
+
+The package also ships a Makefile, which allows installation into
+an arbitrary texmf tree by
+	DESTDIR=/path/to/some/texmf make install
+If former files in the respective yhmath directories should be removed, use
+	CLEANRM="rm -f" DESTDIR=/path/to/some/texmf make install
+
+======
+Yannis Haralambous agreed to the merge, he send an email on 
+Wed, 3 Jul 2013 09:10:31 +0200
+From: Yannis Haralambous <XXXX>
+Subject: Re: yhmath package
+To: Haruhiko Okumura <XXXXX>
+Cc: Norbert Preining <XXXXX>, Karl Berry <XXXXXX>,
+        Kakuto Akira <XXXXXXXX>
+Content-Type: text/plain;
+        charset=utf-8
+Date: Wed, 3 Jul 2013 09:10:31 +0200
+
+No problem with me dear friends
+
+======
+
+
+
+Norbert Preining <norbert@preining.info>
+2013-07-04

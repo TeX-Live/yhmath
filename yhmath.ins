@@ -1,0 +1,47 @@
+\def\batchfile{yhmath.ins}
+\input docstrip
+
+{\ifx\generate\undefined
+\Msg{**********************************************}
+\Msg{*}
+\Msg{* This installation requires docstrip}
+\Msg{* version 2.3c or later.}
+\Msg{*}
+\Msg{* An older version of docstrip has been input}
+\Msg{*}
+\Msg{**********************************************}
+\errhelp{Move or rename old docstrip.tex.}
+\errmessage{Old docstrip in input path}
+\batchmode
+\csname @@end\endcsname
+\fi}
+
+
+
+\preamble
+\endpreamble
+
+\keepsilent
+\askforoverwritefalse
+
+% The packages
+
+\generateFile{yhmath.sty}{f}{\from{yhmath.dtx}{package}}
+
+\generateFile{yhmath.drv}{f}{\from{yhmath.dtx}{driver}}
+
+\generateFile{OMXyhex.fd}{f}{\from{yhmath.dtx}{fdfile}}
+
+\generateFile{yrcmex10.mf}{f}{\from{yhmath.dtx}{mffilea}}
+
+\generateFile{yhmathex.mf}{f}{\from{yhmath.dtx}{mffileb}}
+
+\generateFile{yhbigdel.mf}{f}{\from{yhmath.dtx}{mffilec}}
+
+\generateFile{yhbigacc.mf}{f}{\from{yhmath.dtx}{mffiled}}
+
+\nopreamble\nopostamble
+\generateFile{yhmath.map}{f}{\from{yhmath.dtx}{mapfile}}
+
+\nopreamble\nopostamble
+\generateFile{yhcmex10.vpl}{f}{\from{yhmath.dtx}{vplfile}}

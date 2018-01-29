@@ -1,0 +1,18 @@
+%%
+%% This is file `OMXyhex.fd',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% yhmath.dtx  (with options: `fdfile')
+%% 
+ \ProvidesFile{OMXyhex.fd}
+\ProvidesFile{OMXyhex.fd}
+          [2013/07/03 v1.1 YH's humble contribution to TeX maths (NP)]
+\DeclareFontFamily{OMX}{yhex}{}
+\DeclareFontShape{OMX}{yhex}{m}{n}{
+   <-> sfixed * yhcmex10
+   }{}
+\endinput
+%%
+%% End of file `OMXyhex.fd'.
