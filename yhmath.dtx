@@ -33,21 +33,22 @@
 %
 % \GetFileInfo{yhmath.dtx}
 %
-% \def\fileversion{1.1}
-% \def\filedate{2013/07/04}
+% \def\fileversion{1.2}
+% \def\filedate{2018/01/29}
 %
 % \title{My humble additions to (La)\TeX{} mathematics\thanks{This file is
 %          \fileversion, last revised \filedate.}}
 % \author{Yannis Haralambous\thanks{Address: 187, rue Nationale,
 %          59800 Lille, France}\\
 %           \texttt{\small haralambous@univ-lille1.fr}}
-% \date{January 4, 1996; adaptions NP July 3, 2013}
+% \date{January 4, 1996; adaptions NP July 3, 2013 and Jan 29, 2018}
 % \maketitle
 %
 % \CheckSum{107}
 %
 % \changes{v1.0}{1996/01/04}{First version}
 % \changes{v1.1}{2013/07/04}{Merge type1 and metafont packages (NP)}
+% \changes{v1.2}{2018/01/29}{Replace largesymbols with yhlargesymbols for mtpro cooperation (YH, NP)}
 %
 % \begin{abstract}
 % This package provides a set of big delimiters, intermediate to those
@@ -69,7 +70,15 @@
 % CTAN, all the files have to be installed into their respective places
 % within the TDS hierarchy.
 %
-% \section{About Changes in v1.1}
+% \section{Changes}
+%
+% \subsection{Version v1.2}
+%
+% Yannis found that the current version conflicts with MTpro fonts
+% due to concurrent use of the term \texttt{largesymbols}. This 
+% version only changes this to \texttt{yhlargesymbols}.
+%
+% \subsection{Version v1.1}
 %
 % Yannis first released the Metafont version of the font in 1996, and
 % later added the PostScript version in 2002. These two packages ended
@@ -91,6 +100,7 @@
 %
 % Norbert Preining merged the various sources, adapted the documentation,
 % and uploaded the new package to CTAN.
+%
 %
 % \section{Availability}
 %
@@ -284,17 +294,17 @@
 % First of all we have to ask \LaTeX{} to use our brand new font
 % for ``large symbols''
 %    \begin{macrocode}
-\DeclareSymbolFont{largesymbols}{OMX}{yhex}{m}{n}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
 %    \end{macrocode}
 %
 % Next, the four ``wide'' accents are defined, in a way similar to
 % \LaTeX{} and not to \AmS-\LaTeX{}, so \texttt{yhmath} must be 
 % loaded after |amsmath|!
 %    \begin{macrocode}
-\DeclareMathAccent{\widetilde}{\mathord}{largesymbols}{"65}
-\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
-\DeclareMathAccent{\widetriangle}{\mathord}{largesymbols}{"E6}
-\DeclareMathAccent{\wideparen}{\mathord}{largesymbols}{"F3}
+\DeclareMathAccent{\widetilde}{\mathord}{yhlargesymbols}{"65}
+\DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"62}
+\DeclareMathAccent{\widetriangle}{\mathord}{yhlargesymbols}{"E6}
+\DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
 %    \end{macrocode}
 %
 % The |amatrix| environment is defined

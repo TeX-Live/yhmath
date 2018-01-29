@@ -9,11 +9,11 @@
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
 \ProvidesPackage{yhmath}
 \RequirePackage{amsmath}
-\DeclareSymbolFont{largesymbols}{OMX}{yhex}{m}{n}
-\DeclareMathAccent{\widetilde}{\mathord}{largesymbols}{"65}
-\DeclareMathAccent{\widehat}{\mathord}{largesymbols}{"62}
-\DeclareMathAccent{\widetriangle}{\mathord}{largesymbols}{"E6}
-\DeclareMathAccent{\wideparen}{\mathord}{largesymbols}{"F3}
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
+\DeclareMathAccent{\widetilde}{\mathord}{yhlargesymbols}{"65}
+\DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"62}
+\DeclareMathAccent{\widetriangle}{\mathord}{yhlargesymbols}{"E6}
+\DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
 \newenvironment{amatrix}{\left\langle\begin{matrix}}{\end{matrix}\right\rangle}
 \def\adots{\mathinner{\mkern2mu\raise\p@\hbox{.}
 \mkern2mu\raise4\p@\hbox{.}\mkern1mu
