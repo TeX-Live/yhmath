@@ -68,6 +68,9 @@ yrcmex10.tfm: $(MFFILES)
 yhcmex10.tfm yhcmex10.vf: yhcmex10.vpl
 	vptovf yhcmex10.vpl
 
+ctanclean: clean
+	-rm -f $(MAPFILES) $(MFFILES) $(TEXFILES)
+
 clean:
 	-rm -f $(VPLFILES) yrcmex10.*pk yhmath.log yhmath.aux yhmath.drv
 	-rm -f yrcmex10.log
