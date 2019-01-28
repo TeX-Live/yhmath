@@ -1,0 +1,99 @@
+%%
+%% This is file `yhmath.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% yhmath.dtx  (with options: `package')
+%% 
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{yhmath}[2019/01/24 v1.4]
+\RequirePackage{amsmath}
+\makeatletter
+\gdef\@yhlargesymbols{yhlargesymbols}%
+\DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
+%
+% REDEFINE STUFF IN LATEX DEFAULT SETUP
+%
+\DeclareMathDelimiter{(}{\mathopen} {operators}{"28}{\@yhlargesymbols}{"00}
+\DeclareMathDelimiter{)}{\mathclose}{operators}{"29}{\@yhlargesymbols}{"01}
+\DeclareMathDelimiter{[}{\mathopen} {operators}{"5B}{\@yhlargesymbols}{"02}
+\DeclareMathDelimiter{]}{\mathclose}{operators}{"5D}{\@yhlargesymbols}{"03}
+\DeclareMathDelimiter{<}{\mathopen}{symbols}{"68}{\@yhlargesymbols}{"0A}
+\DeclareMathDelimiter{>}{\mathclose}{symbols}{"69}{\@yhlargesymbols}{"0B}
+\DeclareMathDelimiter{/}{\mathord}{operators}{"2F}{\@yhlargesymbols}{"0E}
+\DeclareMathDelimiter{|}{\mathord}{symbols}{"6A}{\@yhlargesymbols}{"0C}
+\expandafter\DeclareMathDelimiter\@backslashchar
+                        {\mathord}{symbols}{"6E}{\@yhlargesymbols}{"0F}
+\DeclareMathAccent{\widetilde}{\mathord}{\@yhlargesymbols}{"65}
+\DeclareMathAccent{\widehat}{\mathord}{\@yhlargesymbols}{"62}
+\DeclareMathRadical{\sqrtsign}{symbols}{"70}{\@yhlargesymbols}{"70}
+\DeclareMathSymbol{\braceld}{\mathord}{\@yhlargesymbols}{"7A}
+\DeclareMathSymbol{\bracerd}{\mathord}{\@yhlargesymbols}{"7B}
+\DeclareMathSymbol{\bracelu}{\mathord}{\@yhlargesymbols}{"7C}
+\DeclareMathSymbol{\braceru}{\mathord}{\@yhlargesymbols}{"7D}
+\DeclareMathDelimiter{\lmoustache}   % top from (, bottom from )
+   {\mathopen}{\@yhlargesymbols}{"7A}{\@yhlargesymbols}{"40}
+\DeclareMathDelimiter{\rmoustache}   % top from ), bottom from (
+   {\mathclose}{\@yhlargesymbols}{"7B}{\@yhlargesymbols}{"41}
+\DeclareMathDelimiter{\arrowvert}    % arrow without arrowheads
+   {\mathord}{symbols}{"6A}{\@yhlargesymbols}{"3C}
+\DeclareMathDelimiter{\Arrowvert}    % double arrow without arrowheads
+   {\mathord}{symbols}{"6B}{\@yhlargesymbols}{"3D}
+\DeclareMathDelimiter{\Vert}
+   {\mathord}{symbols}{"6B}{\@yhlargesymbols}{"0D}
+\DeclareMathDelimiter{\vert}
+   {\mathord}{symbols}{"6A}{\@yhlargesymbols}{"0C}
+\DeclareMathDelimiter{\uparrow}
+   {\mathrel}{symbols}{"22}{\@yhlargesymbols}{"78}
+\DeclareMathDelimiter{\downarrow}
+   {\mathrel}{symbols}{"23}{\@yhlargesymbols}{"79}
+\DeclareMathDelimiter{\updownarrow}
+   {\mathrel}{symbols}{"6C}{\@yhlargesymbols}{"3F}
+\DeclareMathDelimiter{\Uparrow}
+   {\mathrel}{symbols}{"2A}{\@yhlargesymbols}{"7E}
+\DeclareMathDelimiter{\Downarrow}
+   {\mathrel}{symbols}{"2B}{\@yhlargesymbols}{"7F}
+\DeclareMathDelimiter{\Updownarrow}
+   {\mathrel}{symbols}{"6D}{\@yhlargesymbols}{"77}
+\DeclareMathDelimiter{\backslash}    % for double coset G\backslash H
+   {\mathord}{symbols}{"6E}{\@yhlargesymbols}{"0F}
+\DeclareMathDelimiter{\rangle}
+   {\mathclose}{symbols}{"69}{\@yhlargesymbols}{"0B}
+\DeclareMathDelimiter{\langle}
+   {\mathopen}{symbols}{"68}{\@yhlargesymbols}{"0A}
+\DeclareMathDelimiter{\rbrace}
+   {\mathclose}{symbols}{"67}{\@yhlargesymbols}{"09}
+\DeclareMathDelimiter{\lbrace}
+   {\mathopen}{symbols}{"66}{\@yhlargesymbols}{"08}
+\DeclareMathDelimiter{\rceil}
+   {\mathclose}{symbols}{"65}{\@yhlargesymbols}{"07}
+\DeclareMathDelimiter{\lceil}
+   {\mathopen}{symbols}{"64}{\@yhlargesymbols}{"06}
+\DeclareMathDelimiter{\rfloor}
+   {\mathclose}{symbols}{"63}{\@yhlargesymbols}{"05}
+\DeclareMathDelimiter{\lfloor}
+   {\mathopen}{symbols}{"62}{\@yhlargesymbols}{"04}
+\DeclareMathDelimiter{\lgroup} % extensible ( with sharper tips
+     {\mathopen}{\@yhlargesymbols}{"3A}{\@yhlargesymbols}{"3A}
+\DeclareMathDelimiter{\rgroup} % extensible ) with sharper tips
+     {\mathclose}{\@yhlargesymbols}{"3B}{\@yhlargesymbols}{"3B}
+\DeclareMathDelimiter{\bracevert} % the vertical bar that extends braces
+     {\mathord}{\@yhlargesymbols}{"3E}{\@yhlargesymbols}{"3E}
+%
+% NEW STUFF
+%
+\DeclareMathAccent{\widetriangle}{\mathord}{yhlargesymbols}{"E6}
+\DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
+\newenvironment{amatrix}{\left\langle\begin{matrix}}{\end{matrix}\right\rangle}
+\def\adots{\mathinner{\mkern2mu\raise\p@\hbox{.}
+\mkern2mu\raise4\p@\hbox{.}\mkern1mu
+\raise7\p@\vbox{\kern7\p@\hbox{.}}\mkern1mu}}
+\edef\@tempa#1#2{\def#1{\mathaccent\string"\noexpand\accentclass@#2 }}
+\@tempa\ring{017}
+\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
+\displaystyle\ring{}$}}}{\wideparen{#1}}}
+\makeatother
+\endinput
+%%
+%% End of file `yhmath.sty'.
