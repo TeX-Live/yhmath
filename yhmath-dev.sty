@@ -7,92 +7,108 @@
 %% yhmath.dtx  (with options: `package')
 %% 
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesPackage{yhmath}[2019/01/24 v1.4]
+\ProvidesPackage{yhmath}[2019/01/29 v1.4pre1]
 \RequirePackage{amsmath}
 \makeatletter
-\gdef\@yhlargesymbols{yhlargesymbols}%
+% \widering is also defined in other packages (fourier, newtx, newpx etc)
+% but they do the definition in AtBeginDocument without checking for the
+% existence, so loading this package (yhmath) with others defining 
+% widering will create problems - use option nowidering to undef it.
+\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
+\displaystyle\ring{}$}}}{\wideparen{#1}}}
+%
+\DeclareOption{minimal}{%
+  \gdef\@minfam{largesymbols}%
+}%
+\DeclareOption{full}{%
+  \gdef\@minfam{yhlargesymbols}%
+}%
+\DeclareOption{nowidering}{%
+  \let\widering\@undefined%
+}
+\ExecuteOptions{full}%
+\ProcessOptions\relax
 \DeclareSymbolFont{yhlargesymbols}{OMX}{yhex}{m}{n}
 %
-% REDEFINE STUFF IN LATEX DEFAULT SETUP
-%
-\DeclareMathDelimiter{(}{\mathopen} {operators}{"28}{\@yhlargesymbols}{"00}
-\DeclareMathDelimiter{)}{\mathclose}{operators}{"29}{\@yhlargesymbols}{"01}
-\DeclareMathDelimiter{[}{\mathopen} {operators}{"5B}{\@yhlargesymbols}{"02}
-\DeclareMathDelimiter{]}{\mathclose}{operators}{"5D}{\@yhlargesymbols}{"03}
-\DeclareMathDelimiter{<}{\mathopen}{symbols}{"68}{\@yhlargesymbols}{"0A}
-\DeclareMathDelimiter{>}{\mathclose}{symbols}{"69}{\@yhlargesymbols}{"0B}
-\DeclareMathDelimiter{/}{\mathord}{operators}{"2F}{\@yhlargesymbols}{"0E}
-\DeclareMathDelimiter{|}{\mathord}{symbols}{"6A}{\@yhlargesymbols}{"0C}
-\expandafter\DeclareMathDelimiter\@backslashchar
-                        {\mathord}{symbols}{"6E}{\@yhlargesymbols}{"0F}
-\DeclareMathAccent{\widetilde}{\mathord}{\@yhlargesymbols}{"65}
-\DeclareMathAccent{\widehat}{\mathord}{\@yhlargesymbols}{"62}
-\DeclareMathRadical{\sqrtsign}{symbols}{"70}{\@yhlargesymbols}{"70}
-\DeclareMathSymbol{\braceld}{\mathord}{\@yhlargesymbols}{"7A}
-\DeclareMathSymbol{\bracerd}{\mathord}{\@yhlargesymbols}{"7B}
-\DeclareMathSymbol{\bracelu}{\mathord}{\@yhlargesymbols}{"7C}
-\DeclareMathSymbol{\braceru}{\mathord}{\@yhlargesymbols}{"7D}
-\DeclareMathDelimiter{\lmoustache}   % top from (, bottom from )
-   {\mathopen}{\@yhlargesymbols}{"7A}{\@yhlargesymbols}{"40}
-\DeclareMathDelimiter{\rmoustache}   % top from ), bottom from (
-   {\mathclose}{\@yhlargesymbols}{"7B}{\@yhlargesymbols}{"41}
-\DeclareMathDelimiter{\arrowvert}    % arrow without arrowheads
-   {\mathord}{symbols}{"6A}{\@yhlargesymbols}{"3C}
-\DeclareMathDelimiter{\Arrowvert}    % double arrow without arrowheads
-   {\mathord}{symbols}{"6B}{\@yhlargesymbols}{"3D}
-\DeclareMathDelimiter{\Vert}
-   {\mathord}{symbols}{"6B}{\@yhlargesymbols}{"0D}
-\DeclareMathDelimiter{\vert}
-   {\mathord}{symbols}{"6A}{\@yhlargesymbols}{"0C}
-\DeclareMathDelimiter{\uparrow}
-   {\mathrel}{symbols}{"22}{\@yhlargesymbols}{"78}
-\DeclareMathDelimiter{\downarrow}
-   {\mathrel}{symbols}{"23}{\@yhlargesymbols}{"79}
-\DeclareMathDelimiter{\updownarrow}
-   {\mathrel}{symbols}{"6C}{\@yhlargesymbols}{"3F}
-\DeclareMathDelimiter{\Uparrow}
-   {\mathrel}{symbols}{"2A}{\@yhlargesymbols}{"7E}
-\DeclareMathDelimiter{\Downarrow}
-   {\mathrel}{symbols}{"2B}{\@yhlargesymbols}{"7F}
-\DeclareMathDelimiter{\Updownarrow}
-   {\mathrel}{symbols}{"6D}{\@yhlargesymbols}{"77}
-\DeclareMathDelimiter{\backslash}    % for double coset G\backslash H
-   {\mathord}{symbols}{"6E}{\@yhlargesymbols}{"0F}
-\DeclareMathDelimiter{\rangle}
-   {\mathclose}{symbols}{"69}{\@yhlargesymbols}{"0B}
-\DeclareMathDelimiter{\langle}
-   {\mathopen}{symbols}{"68}{\@yhlargesymbols}{"0A}
-\DeclareMathDelimiter{\rbrace}
-   {\mathclose}{symbols}{"67}{\@yhlargesymbols}{"09}
-\DeclareMathDelimiter{\lbrace}
-   {\mathopen}{symbols}{"66}{\@yhlargesymbols}{"08}
-\DeclareMathDelimiter{\rceil}
-   {\mathclose}{symbols}{"65}{\@yhlargesymbols}{"07}
-\DeclareMathDelimiter{\lceil}
-   {\mathopen}{symbols}{"64}{\@yhlargesymbols}{"06}
-\DeclareMathDelimiter{\rfloor}
-   {\mathclose}{symbols}{"63}{\@yhlargesymbols}{"05}
-\DeclareMathDelimiter{\lfloor}
-   {\mathopen}{symbols}{"62}{\@yhlargesymbols}{"04}
-\DeclareMathDelimiter{\lgroup} % extensible ( with sharper tips
-     {\mathopen}{\@yhlargesymbols}{"3A}{\@yhlargesymbols}{"3A}
-\DeclareMathDelimiter{\rgroup} % extensible ) with sharper tips
-     {\mathclose}{\@yhlargesymbols}{"3B}{\@yhlargesymbols}{"3B}
-\DeclareMathDelimiter{\bracevert} % the vertical bar that extends braces
-     {\mathord}{\@yhlargesymbols}{"3E}{\@yhlargesymbols}{"3E}
-%
-% NEW STUFF
-%
+% Declaration that remain after YH updated to 1.2 in 2018
+\DeclareMathAccent{\widetilde}{\mathord}{yhlargesymbols}{"65}
+\DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"62}
 \DeclareMathAccent{\widetriangle}{\mathord}{yhlargesymbols}{"E6}
 \DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
+%
+% Declaration that were there up to version 1.1 (1996-2018)
+\DeclareMathDelimiter{(}{\mathopen} {operators}{"28}{\@minfam}{"00}
+\DeclareMathDelimiter{)}{\mathclose}{operators}{"29}{\@minfam}{"01}
+\DeclareMathDelimiter{[}{\mathopen} {operators}{"5B}{\@minfam}{"02}
+\DeclareMathDelimiter{]}{\mathclose}{operators}{"5D}{\@minfam}{"03}
+\DeclareMathDelimiter{<}{\mathopen}{symbols}{"68}{\@minfam}{"0A}
+\DeclareMathDelimiter{>}{\mathclose}{symbols}{"69}{\@minfam}{"0B}
+\DeclareMathDelimiter{/}{\mathord}{operators}{"2F}{\@minfam}{"0E}
+\DeclareMathDelimiter{|}{\mathord}{symbols}{"6A}{\@minfam}{"0C}
+\DeclareMathRadical{\sqrtsign}{symbols}{"70}{\@minfam}{"70}
+\DeclareMathSymbol{\braceld}{\mathord}{\@minfam}{"7A}
+\DeclareMathSymbol{\bracerd}{\mathord}{\@minfam}{"7B}
+\DeclareMathSymbol{\bracelu}{\mathord}{\@minfam}{"7C}
+\DeclareMathSymbol{\braceru}{\mathord}{\@minfam}{"7D}
+\DeclareMathDelimiter{\lmoustache}   % top from (, bottom from )
+   {\mathopen}{\@minfam}{"7A}{\@minfam}{"40}
+\DeclareMathDelimiter{\rmoustache}   % top from ), bottom from (
+   {\mathclose}{\@minfam}{"7B}{\@minfam}{"41}
+\DeclareMathDelimiter{\arrowvert}    % arrow without arrowheads
+   {\mathord}{symbols}{"6A}{\@minfam}{"3C}
+\DeclareMathDelimiter{\Arrowvert}    % double arrow without arrowheads
+   {\mathord}{symbols}{"6B}{\@minfam}{"3D}
+\DeclareMathDelimiter{\Vert}
+   {\mathord}{symbols}{"6B}{\@minfam}{"0D}
+\DeclareMathDelimiter{\vert}
+   {\mathord}{symbols}{"6A}{\@minfam}{"0C}
+\DeclareMathDelimiter{\uparrow}
+   {\mathrel}{symbols}{"22}{\@minfam}{"78}
+\DeclareMathDelimiter{\downarrow}
+   {\mathrel}{symbols}{"23}{\@minfam}{"79}
+\DeclareMathDelimiter{\updownarrow}
+   {\mathrel}{symbols}{"6C}{\@minfam}{"3F}
+\DeclareMathDelimiter{\Uparrow}
+   {\mathrel}{symbols}{"2A}{\@minfam}{"7E}
+\DeclareMathDelimiter{\Downarrow}
+   {\mathrel}{symbols}{"2B}{\@minfam}{"7F}
+\DeclareMathDelimiter{\Updownarrow}
+   {\mathrel}{symbols}{"6D}{\@minfam}{"77}
+\expandafter\DeclareMathDelimiter\@backslashchar
+                        {\mathord}{symbols}{"6E}{\@minfam}{"0F}
+\DeclareMathDelimiter{\backslash}    % for double coset G\backslash H
+   {\mathord}{symbols}{"6E}{\@minfam}{"0F}
+\DeclareMathDelimiter{\rangle}
+   {\mathclose}{symbols}{"69}{\@minfam}{"0B}
+\DeclareMathDelimiter{\langle}
+   {\mathopen}{symbols}{"68}{\@minfam}{"0A}
+\DeclareMathDelimiter{\rbrace}
+   {\mathclose}{symbols}{"67}{\@minfam}{"09}
+\DeclareMathDelimiter{\lbrace}
+   {\mathopen}{symbols}{"66}{\@minfam}{"08}
+\DeclareMathDelimiter{\rceil}
+   {\mathclose}{symbols}{"65}{\@minfam}{"07}
+\DeclareMathDelimiter{\lceil}
+   {\mathopen}{symbols}{"64}{\@minfam}{"06}
+\DeclareMathDelimiter{\rfloor}
+   {\mathclose}{symbols}{"63}{\@minfam}{"05}
+\DeclareMathDelimiter{\lfloor}
+   {\mathopen}{symbols}{"62}{\@minfam}{"04}
+\DeclareMathDelimiter{\lgroup} % extensible ( with sharper tips
+     {\mathopen}{\@minfam}{"3A}{\@minfam}{"3A}
+\DeclareMathDelimiter{\rgroup} % extensible ) with sharper tips
+     {\mathclose}{\@minfam}{"3B}{\@minfam}{"3B}
+\DeclareMathDelimiter{\bracevert} % the vertical bar that extends braces
+     {\mathord}{\@minfam}{"3E}{\@minfam}{"3E}
+%
+% New declarations
+%
 \newenvironment{amatrix}{\left\langle\begin{matrix}}{\end{matrix}\right\rangle}
 \def\adots{\mathinner{\mkern2mu\raise\p@\hbox{.}
 \mkern2mu\raise4\p@\hbox{.}\mkern1mu
 \raise7\p@\vbox{\kern7\p@\hbox{.}}\mkern1mu}}
 \edef\@tempa#1#2{\def#1{\mathaccent\string"\noexpand\accentclass@#2 }}
 \@tempa\ring{017}
-\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
-\displaystyle\ring{}$}}}{\wideparen{#1}}}
 \makeatother
 \endinput
 %%
