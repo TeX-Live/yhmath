@@ -2,7 +2,7 @@
 % yhmath.dtx
 % 
 % originally written by Yannis Haralambous, extended by Norbert Preining
-% in 2013. See pdf for details.
+% in 2013, 2019. See pdf for details.
 %
 % \fi
 %
@@ -12,7 +12,7 @@
           \ProvidesFile{yhmath.dtx}
 %</dtx>
 %<package>\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-%<package>\ProvidesPackage{yhmath}[2019/01/24 v1.4]
+%<package>\ProvidesPackage{yhmath}[2019/02/04 v1.4]
 %<driver> \ProvidesFile{yhmath.drv}
 %<fdfile> \ProvidesFile{OMXyhex.fd}
 % \fi
@@ -34,13 +34,13 @@
 % \GetFileInfo{yhmath.dtx}
 %
 % \def\fileversion{1.4}
-% \def\filedate{2019/01/24}
+% \def\filedate{2019/02/04}
 %
 % \title{My humble additions to (La)\TeX{} mathematics\thanks{This file is
 %          \fileversion, last revised \filedate.}}
 % \author{Yannis Haralambous\\
 %           \texttt{\small yannis1962@gmail.com}}
-% \date{January 4, 1996; adaptions NP July 3, 2013 and Jan 29, 2018}
+% \date{January 4, 1996; adaptions NP July 3, 2013 and Feb 4, 2019}
 % \maketitle
 %
 % \CheckSum{107}
@@ -49,7 +49,7 @@
 % \changes{v1.1}{2013/07/04}{Merge type1 and metafont packages (NP)}
 % \changes{v1.2}{2018/01/29}{Replace largesymbols with yhlargesymbols for mtpro cooperation (YH, NP)}
 % \changes{v1.3}{2018/01/31}{Add license statements (NP)}
-% \changes{v1.4}{2019/01/24}{Add date in the ProvidesPackage}
+% \changes{v1.4}{2019/01/24}{Package options, dates, backward compatibility (NP)}
 %
 % \begin{abstract}
 % This package provides a set of big delimiters, intermediate to those
@@ -72,6 +72,17 @@
 % within the TDS hierarchy.
 %
 % \section{Changes}
+%
+% \subsection{Version v1.4}
+%
+% The change in v1.2 triggered a few inconveniences due to the sudden
+% change of behavior. This version reverts back to the behavior of
+% v1.1 (but with a different implementation), and adds package options
+% to switch between different sets of defined operators.
+%
+% Furthermore, to support cooperation with other packages defining
+% the same command \texttt{widering}, a package option disable this
+% definition in \texttt{yhmath} has been added.
 %
 % \subsection{Version v1.3}
 %
@@ -105,6 +116,19 @@
 %
 % Norbert Preining merged the various sources, adapted the documentation,
 % and uploaded the new package to CTAN.
+%
+% \section{Package Options}
+%
+% \DescribeMacro{full}
+% Defines all operators that have been defined in package version up
+% to 1.1. See the code appendix for details.
+%
+% \DescribeMacro{minimal}
+% Defines only those operators that were defined in the package
+% version 1.2 and 1.3.
+%
+% \DescribeMacro{nowidering}
+% Do not define the macro |\widering|.
 %
 % \section{Availability}
 %
@@ -278,7 +302,10 @@
 % \widering{ABCDEF},
 % \widering{ABCDEFG},
 % $$
-% 
+%
+% Other packages have added similar macros |\widering|. To make
+% cooperation possible, the package option |nowidering| disables the
+% definition of |\widering|.
 % 
 %
 % \StopEventually{}
@@ -295,6 +322,43 @@
 \RequirePackage{amsmath}
 %    \end{macrocode}
 %
+% |\widering| is also defined in other packages (fourier, newtx, newpx etc)
+% but they do the definition in AtBeginDocument without checking for the
+% existence, so loading this package (yhmath) with others defining 
+% widering will create problems - use option nowidering to undef it.
+% First define the macro, and clear it if the respective package
+% option is given. Here is a (clumsy) definition of |\widering|, that is
+% a ring over an horizontal parenthesis.
+%    \begin{macrocode}
+\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
+\displaystyle\ring{}$}}}{\wideparen{#1}}}
+%    \end{macrocode}
+%
+% \subsection{Option handling}
+%
+% Three options are supported: |minimal| which defines only those
+% operators that are defined in version 1.2 and 1.3 of yhmath; |full|
+% which defines the full set as used up to version 1.1; and
+% |nowidering| which prevents the definition of the |\widering| macro.
+%
+%    \begin{macrocode}
+\DeclareOption{minimal}{%
+  \gdef\@minfam{largesymbols}%
+}%
+\DeclareOption{full}{%
+  \gdef\@minfam{yhlargesymbols}%
+}%
+\DeclareOption{nowidering}{%
+  \let\widering\@undefined%
+}
+%    \end{macrocode}
+%
+% As default we revert back to the status of package version till 1.1
+%    \begin{macrocode}
+\ExecuteOptions{full}%
+\ProcessOptions\relax
+%    \end{macrocode}
+%
 % First of all we have to ask \LaTeX{} to use our brand new font
 % for ``large symbols''
 %    \begin{macrocode}
@@ -304,11 +368,85 @@
 % Next, the four ``wide'' accents are defined, in a way similar to
 % \LaTeX{} and not to \AmS-\LaTeX{}, so \texttt{yhmath} must be 
 % loaded after |amsmath|!
+%
+%%
+%% Declaration that remain after YH updated to v1.2 in 2018
 %    \begin{macrocode}
 \DeclareMathAccent{\widetilde}{\mathord}{yhlargesymbols}{"65}
 \DeclareMathAccent{\widehat}{\mathord}{yhlargesymbols}{"62}
 \DeclareMathAccent{\widetriangle}{\mathord}{yhlargesymbols}{"E6}
 \DeclareMathAccent{\wideparen}{\mathord}{yhlargesymbols}{"F3}
+%    \end{macrocode}
+%
+% Instead of redefining the |largesymbols| math alphabet we
+% explicitely redefine the operators that are provided by the font.
+%
+%%
+%% Declaration that were there up to version 1.1 (1996-2018)
+%    \begin{macrocode}
+\DeclareMathDelimiter{(}{\mathopen} {operators}{"28}{\@minfam}{"00}
+\DeclareMathDelimiter{)}{\mathclose}{operators}{"29}{\@minfam}{"01}
+\DeclareMathDelimiter{[}{\mathopen} {operators}{"5B}{\@minfam}{"02}
+\DeclareMathDelimiter{]}{\mathclose}{operators}{"5D}{\@minfam}{"03}
+\DeclareMathDelimiter{<}{\mathopen}{symbols}{"68}{\@minfam}{"0A}
+\DeclareMathDelimiter{>}{\mathclose}{symbols}{"69}{\@minfam}{"0B}
+\DeclareMathDelimiter{/}{\mathord}{operators}{"2F}{\@minfam}{"0E}
+\DeclareMathDelimiter{|}{\mathord}{symbols}{"6A}{\@minfam}{"0C}
+\DeclareMathRadical{\sqrtsign}{symbols}{"70}{\@minfam}{"70}
+\DeclareMathSymbol{\braceld}{\mathord}{\@minfam}{"7A}
+\DeclareMathSymbol{\bracerd}{\mathord}{\@minfam}{"7B}
+\DeclareMathSymbol{\bracelu}{\mathord}{\@minfam}{"7C}
+\DeclareMathSymbol{\braceru}{\mathord}{\@minfam}{"7D}
+\DeclareMathDelimiter{\lmoustache}   % top from (, bottom from )
+   {\mathopen}{\@minfam}{"7A}{\@minfam}{"40}
+\DeclareMathDelimiter{\rmoustache}   % top from ), bottom from (
+   {\mathclose}{\@minfam}{"7B}{\@minfam}{"41}
+\DeclareMathDelimiter{\arrowvert}    % arrow without arrowheads
+   {\mathord}{symbols}{"6A}{\@minfam}{"3C}
+\DeclareMathDelimiter{\Arrowvert}    % double arrow without arrowheads
+   {\mathord}{symbols}{"6B}{\@minfam}{"3D}
+\DeclareMathDelimiter{\Vert}
+   {\mathord}{symbols}{"6B}{\@minfam}{"0D}
+\DeclareMathDelimiter{\vert}
+   {\mathord}{symbols}{"6A}{\@minfam}{"0C}
+\DeclareMathDelimiter{\uparrow}
+   {\mathrel}{symbols}{"22}{\@minfam}{"78}
+\DeclareMathDelimiter{\downarrow}
+   {\mathrel}{symbols}{"23}{\@minfam}{"79}
+\DeclareMathDelimiter{\updownarrow}
+   {\mathrel}{symbols}{"6C}{\@minfam}{"3F}
+\DeclareMathDelimiter{\Uparrow}
+   {\mathrel}{symbols}{"2A}{\@minfam}{"7E}
+\DeclareMathDelimiter{\Downarrow}
+   {\mathrel}{symbols}{"2B}{\@minfam}{"7F}
+\DeclareMathDelimiter{\Updownarrow}
+   {\mathrel}{symbols}{"6D}{\@minfam}{"77}
+\expandafter\DeclareMathDelimiter\@backslashchar
+                        {\mathord}{symbols}{"6E}{\@minfam}{"0F}
+\DeclareMathDelimiter{\backslash}    % for double coset G\backslash H
+   {\mathord}{symbols}{"6E}{\@minfam}{"0F}
+\DeclareMathDelimiter{\rangle}
+   {\mathclose}{symbols}{"69}{\@minfam}{"0B}
+\DeclareMathDelimiter{\langle}
+   {\mathopen}{symbols}{"68}{\@minfam}{"0A}
+\DeclareMathDelimiter{\rbrace}
+   {\mathclose}{symbols}{"67}{\@minfam}{"09}
+\DeclareMathDelimiter{\lbrace}
+   {\mathopen}{symbols}{"66}{\@minfam}{"08}
+\DeclareMathDelimiter{\rceil}
+   {\mathclose}{symbols}{"65}{\@minfam}{"07}
+\DeclareMathDelimiter{\lceil}
+   {\mathopen}{symbols}{"64}{\@minfam}{"06}
+\DeclareMathDelimiter{\rfloor}
+   {\mathclose}{symbols}{"63}{\@minfam}{"05}
+\DeclareMathDelimiter{\lfloor}
+   {\mathopen}{symbols}{"62}{\@minfam}{"04}
+\DeclareMathDelimiter{\lgroup} % extensible ( with sharper tips
+     {\mathopen}{\@minfam}{"3A}{\@minfam}{"3A}
+\DeclareMathDelimiter{\rgroup} % extensible ) with sharper tips
+     {\mathclose}{\@minfam}{"3B}{\@minfam}{"3B}
+\DeclareMathDelimiter{\bracevert} % the vertical bar that extends braces
+     {\mathord}{\@minfam}{"3E}{\@minfam}{"3E}
 %    \end{macrocode}
 %
 % The |amatrix| environment is defined
@@ -331,12 +469,6 @@
 \@tempa\ring{017}
 %    \end{macrocode}
 %
-% And finally here is a (clumsy) definition of |\widering|, that is
-% a ring over an horizontal parenthesis.
-%    \begin{macrocode}
-\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
-\displaystyle\ring{}$}}}{\wideparen{#1}}}
-%    \end{macrocode}
 %
 %
 %    \begin{macrocode}
