@@ -12,7 +12,7 @@
           \ProvidesFile{yhmath.dtx}
 %</dtx>
 %<package>\NeedsTeXFormat{LaTeX2e}[1995/12/01]
-%<package>\ProvidesPackage{yhmath}[2019/02/18 v1.4]
+%<package>\ProvidesPackage{yhmath}[2019/MM/DD v1.5dev]
 %<driver> \ProvidesFile{yhmath.drv}
 %<fdfile> \ProvidesFile{OMXyhex.fd}
 % \fi
@@ -33,14 +33,14 @@
 %
 % \GetFileInfo{yhmath.dtx}
 %
-% \def\fileversion{1.4}
-% \def\filedate{2019/02/18}
+% \def\fileversion{1.5dev}
+% \def\filedate{2019/MM/DD}
 %
 % \title{My humble additions to (La)\TeX{} mathematics\thanks{This file is
 %          \fileversion, last revised \filedate.}}
-% \author{Yannis Haralambous\\
-%           \texttt{\small yannis1962@gmail.com}}
-% \date{January 4, 1996; adaptions NP July 3, 2013 and Feb 4, 2019}
+% \author{Yannis Haralambous, Norbert Preining\\
+%           \texttt{\small yannis1962@gmail.com}, \texttt{\small norbert@preining.info}}
+% \date{January 4, 1996 (YH); February 23, 2019 (NP)}
 % \maketitle
 %
 % \CheckSum{107}
@@ -50,6 +50,7 @@
 % \changes{v1.2}{2018/01/29}{Replace largesymbols with yhlargesymbols for mtpro cooperation (YH, NP)}
 % \changes{v1.3}{2018/01/31}{Add license statements (NP)}
 % \changes{v1.4}{2019/02/18}{Package options, dates, backward compatibility (NP)}
+% \changes{v1.5dev}{2019/MM/DD}{Fixes to math delimiters, make font extensible (NP)}
 %
 % \begin{abstract}
 % This package provides a set of big delimiters, intermediate to those
@@ -72,6 +73,13 @@
 % within the TDS hierarchy.
 %
 % \section{Changes}
+%
+% \subsection{Version v1.5}
+%
+% Fixes for the math delimiters $<$, $>$, and $/$ where incorporated,
+% as well as the property \texttt{sfixed} removed from the font 
+% definition (GH Issues 1,2).
+% 
 %
 % \subsection{Version v1.4}
 %
