@@ -10,7 +10,9 @@ DRVFILES=yhmath.drv
 PFBFILES=yhcmex.pfb
 SOURCEFILES=yhmath.dtx yhmath.ins
 
-GENFILES=$(TFMFILES) $(VFFILES) $(MFFILES) $(VPLFILES) $(TEXFILES) $(MAPFILES) $(DOCFILES) $(DRVFILES)
+CLEANFILES=$(MFFILES) $(VPLFILES) $(TEXFILES) $(MAPFILES) $(DRVFILES)
+EXTRACLEANFILES=$(TFMFILES) $(VFFILES) $(DOCFILES)
+GENFILES=$(TFMFILES) $(VFFILES) $(DOCFILES) $(MFFILES) $(VPLFILES) $(TEXFILES) $(MAPFILES) $(DRVFILES)
 
 DESTDIR ?= /usr/local/share/texmf
 CLEANRM ?= :
@@ -68,15 +70,10 @@ yrcmex10.tfm: $(MFFILES)
 yhcmex10.tfm yhcmex10.vf: yhcmex10.vpl
 	vptovf yhcmex10.vpl
 
-ctanclean: clean
-	-rm -f $(MAPFILES) $(MFFILES) $(TEXFILES)
-
 clean:
-	-rm -f $(VPLFILES) yrcmex10.*pk yhmath.log yhmath.aux yhmath.drv
-	-rm -f yrcmex10.log
+	-rm -f $(CLEANFILES)
+	-rm -f *.log
 	-rm -f *~
 
-
-
-distclean: clean
-	-rm -f $(GENFILES)
+realclean: clean
+	-rm -f $(EXTRACLEANFILES)
