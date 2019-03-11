@@ -607,7 +607,9 @@ font_coding_scheme:="TeX math extension";
 mode_setup; font_setup;
 
 input yhbigdel;  % large delimiters
-input bigop;  % large operators
+% do not include big operators here to save on dp/ht values in tfm
+% the .sty files uses the big ops from original cmex10
+%input bigop;  % large operators
 input yhbigacc;  % large accents
 
 font_x_height x_height#;
@@ -730,7 +732,7 @@ filldraw stroke z3e{3(x2e-x3e),y2-y3}...{up}z2e;  % lower arc
 penlabels(2,3); endchar;
 
 cmchar "Extensible left parenthesis---extension module";
-beginchar(oct"102",12u#,0,dh#);
+beginchar(oct"102",12u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(4u#,-.25u#); pickup fine.nib;
 numeric max_breadth; max_breadth=bold+2dw;
 pos2(hround max_breadth,0); pos2'(hround max_breadth,0);
@@ -777,7 +779,7 @@ filldraw stroke z3e{3(x2e-x3e),y2-y3}...{up}z2e;  % lower arc
 penlabels(2,3); endchar;
 
 cmchar "Extensible right parenthesis---extension module";
-beginchar(oct"103",12u#,0,dh#);
+beginchar(oct"103",12u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(-.25u#,4u#); pickup fine.nib;
 numeric max_breadth; max_breadth=bold+2dw;
 pos2(hround max_breadth,0); pos2'(hround max_breadth,0);
@@ -824,7 +826,7 @@ filldraw stroke z5e--z6e;  % lower bar
 penlabels(1,2,5,6); endchar;
 
 cmchar "Extensible left bracket---extension module";
-beginchar(oct"066",8u#,0,dh#);
+beginchar(oct"066",8u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(4u#,0); pickup crisp.nib;
 pos1(stem,0); pos2(stem,0);
 y1=h+1+eps; bot y2=-d-1-eps; lft x1l=lft x2l=hround(2.5u-.5stem);
@@ -870,7 +872,7 @@ filldraw stroke z5e--z6e;  % lower bar
 penlabels(1,2,5,6); endchar;
 
 cmchar "Extensible right bracket---extension module";
-beginchar(oct"067",8u#,0,dh#);
+beginchar(oct"067",8u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,4u#); pickup crisp.nib;
 pos1(stem,0); pos2(stem,0);
 y1=h+1+eps; bot y2=-d-1-eps; rt x1r=rt x2r=hround(w-2.5u+.5stem);
@@ -958,7 +960,7 @@ beginchar(oct"050",11.5u#,rule_thickness#,5dh#-rule_thickness#);
 adjust_fit(1.5u#,1.5u#); left_curly(rule_thickness+.4dw,bold+dw); endchar;
 
 cmchar "Extensible left curly brace---top";
-beginchar(oct"070",12u#,0,1.5dh#);
+beginchar(oct"070",12u#,1.5dh#,0); %%%% was ,0,1.5dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos1(min_breadth,0); pos1'(min_breadth,0);
@@ -971,7 +973,7 @@ filldraw z1l{3(x2l-x1l),y2-y1}...z2l---z3l
 penlabels(1,2,3); endchar;
 
 cmchar "Extensible left curly brace---bottom";
-beginchar(oct"072",12u#,0,1.5dh#);
+beginchar(oct"072",12u#,1.5dh#,0); %%%% was ,0,1.5dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos7(min_breadth,0); pos7'(min_breadth,0);
@@ -984,7 +986,7 @@ filldraw z5l---z6l...{3(x7l-x6l),y7-y6}z7l
 penlabels(5,6,7); endchar;
 
 cmchar "Extensible left curly brace---middle";
-beginchar(oct"074",12u#,0,3dh#);
+beginchar(oct"074",12u#,rule_thickness#,3dh#-rule_thickness#); %%%% was ,0,3dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos4(min_breadth,0); pos4'(min_breadth,0);
@@ -1000,7 +1002,7 @@ filldraw z2l---z3l...{3(x4l-x3l),y4-y3}z4l
 penlabels(2,3,4,5,6); endchar;
 
 cmchar "Extensible curly brace---extension module";
-beginchar(oct"076",12u#,0,.5dh#);
+beginchar(oct"076",12u#,.5dh#,0); %%%% was ,0,.5dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 pos2(heavy_rule_thickness,0); pos3(heavy_rule_thickness,0);
 lft x2l=lft x3l=hround(.5w-.5heavy_rule_thickness); y2=h+eps; y3=-d-eps;
@@ -1024,7 +1026,7 @@ beginchar(oct"051",11.5u#,rule_thickness#,5dh#-rule_thickness#);
 adjust_fit(1.5u#,1.5u#); right_curly(rule_thickness+.4dw,bold+dw); endchar;
 
 cmchar "Extensible right curly brace---top";
-beginchar(oct"071",12u#,0,1.5dh#);
+beginchar(oct"071",12u#,1.5dh#,0); %%%% was ,0,1.5dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos1(min_breadth,0); pos1'(min_breadth,0);
@@ -1037,7 +1039,7 @@ filldraw z1r{3(x2r-x1r),y2-y1}...z2r---z3r
 penlabels(1,2,3); endchar;
 
 cmchar "Extensible right curly brace---bottom";
-beginchar(oct"073",12u#,0,1.5dh#);
+beginchar(oct"073",12u#,1.5dh#,0); %%%% was ,0,1.5dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos7(min_breadth,0); pos7'(min_breadth,0);
@@ -1050,7 +1052,7 @@ filldraw z5r---z6r...{3(x7r-x6r),y7-y6}z7r
 penlabels(5,6,7); endchar;
 
 cmchar "Extensible right curly brace---middle";
-beginchar(oct"075",12u#,0,3dh#);
+beginchar(oct"075",12u#,rule_thickness#,3dh#-rule_thickness#); %%%% was ,0,3dh#)
 adjust_fit(2u#,2u#); pickup fine.nib;
 numeric min_breadth; min_breadth=hround(rule_thickness+.6dw);
 pos4(min_breadth,0); pos4'(min_breadth,0);
@@ -1178,21 +1180,21 @@ beginchar(oct"055",23u#,rule_thickness#,5dh#-rule_thickness#);
 big_blash(rule_thickness+1.5dw); endchar;
 
 cmchar "Extensible vertical line---extension module";
-beginchar(oct"014",6u#,0,dh#);
+beginchar(oct"014",6u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup pencircle scaled(rule_thickness+.2dw);
-x1=x2=good.x .5w; y1=eps; y2=-d-eps;
+x1=x2=good.x .5w; y1=h+eps; y2=-d-eps; %%%% was y1=eps
 draw z1--z2;  % stem
 labels(1,2); endchar;
 
 cmchar "Extensible double vertical line---extension module";
-beginchar(oct"015",10u#,0,dh#);
+beginchar(oct"015",10u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup pencircle scaled(rule_thickness+.2dw);
-x1=x2=good.x .3w; x3=x4=w-x1; y1=y3=eps; y2=y4=-d-eps;
+x1=x2=good.x .3w; x3=x4=w-x1; y1=y3=h+eps; y2=y4=-d-eps; %%%% was y1=y3=eps
 draw z1--z2; draw z3--z4;  % stems
 labels(1,2,3,4); endchar;
 
 cmchar "Extensible vertical arrow--top";
-beginchar(oct"170",12u#,0,dh#);
+beginchar(oct"170",12u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness,barr;
 thickness=hround(rule_thickness+.2dw); barr=Vround .6[bar,thickness];
@@ -1206,12 +1208,12 @@ z9=.381966[.5[z3,z4],z0];
 numeric t; path p; p=z4l{z9-z4}..z6r;
 t=xpart(p intersectiontimes((x2r,-d)--(x2r,h))); y2=ypart point t of p;
 filldraw z0..{z4-z9}z4r--subpath (0,t) of\\(z4l{z9-z4}..z6r)
- --z2r---z1r--z1l---z2l--subpath (t,0) of\\(z3l{z9-z3}..z5r)
+ --z1r--z1l--subpath (t,0) of\\(z3l{z9-z3}..z5r)
  --z3r{z9-z3}..z0 & cycle;  % arrowhead and stem
 penlabels(0,1,2,3,4,5,6,9); endchar;
 
 cmchar "Extensible vertical arrow--bottom";
-beginchar(oct"171",12u#,0,dh#);
+beginchar(oct"171",12u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness,barr;
 thickness=hround(rule_thickness+.2dw); barr=Vround .6[bar,thickness];
@@ -1225,12 +1227,12 @@ z9=.381966[.5[z3,z4],z0];
 numeric t; path p; p=z4r{z9-z4}..z6r;
 t=xpart(p intersectiontimes((x2r,-d)--(x2r,h))); y2=ypart point t of p;
 filldraw z0..{z4-z9}z4l--subpath (0,t) of\\(z4r{z9-z4}..z6r)
- --z2r---z1r--z1l---z2l--subpath (t,0) of\\(z3r{z9-z3}..z5r)
+ --z1r--z1l--subpath (t,0) of\\(z3r{z9-z3}..z5r)
  --z3l{z9-z3}..z0 & cycle;  % arrowhead and stem
 penlabels(0,1,2,3,4,5,6,9); endchar;
 
-"Extensible vertical arrow--extension module";
-beginchar(oct"077",12u#,0,dh#);
+cmchar "Extensible vertical arrow--extension module";
+beginchar(oct"077",12u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness; thickness=hround(rule_thickness+.2dw);
 pos1(thickness,0); pos2(thickness,0);
@@ -1239,7 +1241,7 @@ filldraw stroke z1e--z2e;  % stem
 penlabels(1,2); endchar;
 
 cmchar "Extensible double vertical arrow--top";
-beginchar(oct"176",14u#,0,dh#);
+beginchar(oct"176",14u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness; thickness=Vround(rule_thickness+.2dw);
 pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
@@ -1259,7 +1261,7 @@ filldraw z0..{z4-z9}z4r--subpath (0,t) of\\(z4l{z9-z4}..z6r)
 penlabels(0,1,2,3,4,5,6,7,8,9); endchar;
 
 cmchar "Extensible double vertical arrow--bottom";
-beginchar(oct"177",14u#,0,dh#);
+beginchar(oct"177",14u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness; thickness=Vround(rule_thickness+.2dw);
 pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
@@ -1278,8 +1280,8 @@ filldraw z0..{z4-z9}z4l--subpath (0,t) of\\(z4r{z9-z4}..z6r)
  --subpath (t,0) of\\(z3r{z9-z3}..z5r)--z3l{z9-z3}..z0 & cycle;  % arrowhead
 penlabels(0,1,2,3,4,5,6,7,8,9); endchar;
 
-"Extensible double vertical arrow--extension module";
-beginchar(oct"167",14u#,0,dh#);
+cmchar "Extensible double vertical arrow--extension module";
+beginchar(oct"167",14u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,0); pickup crisp.nib;
 numeric thickness; thickness=Vround(rule_thickness+.2dw);
 pos1(thickness,0); pos2(thickness,0); pos7(thickness,0); pos8(thickness,0);
@@ -1305,7 +1307,7 @@ beginchar(oct"163",18u#,rule_thickness#,5dh#-rule_thickness#);
 big_sqrt; endchar;
 
 cmchar "Extensible radical sign---bottom";
-beginchar(oct"164",19u#,0,3dh#);
+beginchar(oct"164",19u#,rule_thickness#,3dh#-rule_thickness#); %%%% was ,0,3dh#)
 adjust_fit(0,-letter_fit#); pickup rule.nib;
 x1=x2=good.x(w-6u); bot y1=1-d; y2=h+eps;
 draw z1--z2;  % diagonal
@@ -1319,7 +1321,7 @@ filldraw z5r--z6--z4l--z4--z7--z3r--z5l--cycle;  % left diagonal and serif
 penlabels(1,2,3,4,5,6,7); endchar;
 
 cmchar "Extensible radical sign---extension module";
-beginchar(oct"165",19u#,0,dh#);
+beginchar(oct"165",19u#,rule_thickness#,dh#-rule_thickness#); %%%% was ,0,dh#)
 adjust_fit(0,-letter_fit#); pickup rule.nib;
 x1=x2=good.x(w-6u); y1=-d-eps; y2=h+eps;
 draw z1--z2;  % stem
@@ -2094,7 +2096,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 14
    (CHARWD R 0.333334)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (REP O 14)
       )
@@ -2105,7 +2108,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 15
    (CHARWD R 0.555557)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (REP O 15)
       )
@@ -2538,7 +2542,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 66
    (CHARWD R 0.666669)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 62)
       (REP O 66)
@@ -2550,7 +2555,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 67
    (CHARWD R 0.666669)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 63)
       (REP O 67)
@@ -2562,7 +2568,7 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 70
    (CHARWD R 0.888891)
-   (CHARDP R 0.900009)
+   (CHARHT R 0.900009)
    (VARCHAR
       (TOP O 70)
       (MID O 74)
@@ -2576,7 +2582,7 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 71
    (CHARWD R 0.888891)
-   (CHARDP R 0.900009)
+   (CHARHT R 0.900009)
    (VARCHAR
       (TOP O 71)
       (MID O 75)
@@ -2590,7 +2596,7 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 72
    (CHARWD R 0.888891)
-   (CHARDP R 0.900009)
+   (CHARHT R 0.900009)
    (VARCHAR
       (TOP O 70)
       (BOT O 72)
@@ -2603,7 +2609,7 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 73
    (CHARWD R 0.888891)
-   (CHARDP R 0.900009)
+   (CHARHT R 0.900009)
    (VARCHAR
       (TOP O 71)
       (BOT O 73)
@@ -2616,7 +2622,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 74
    (CHARWD R 0.888891)
-   (CHARDP R 1.800018)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.760019)
    (VARCHAR
       (REP O 77)
       )
@@ -2627,7 +2634,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 75
    (CHARWD R 0.888891)
-   (CHARDP R 1.800018)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.760019)
    (VARCHAR
       (REP O 167)
       )
@@ -2638,7 +2646,7 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 76
    (CHARWD R 0.888891)
-   (CHARDP R 0.300003)
+   (CHARHT R 0.300003)
    (VARCHAR
       (REP O 76)
       )
@@ -2649,7 +2657,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 77
    (CHARWD R 0.666669)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 170)
       (BOT O 171)
@@ -2690,7 +2699,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 102
    (CHARWD R 0.875003)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (REP O 102)
       )
@@ -2701,7 +2711,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 103
    (CHARWD R 0.875003)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (REP O 103)
       )
@@ -2730,260 +2741,261 @@ yrcmex10 Yhcmex <yhcmex.pfb
       (SETCHAR O 105)
       )
    )
-(CHARACTER O 106
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 107)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 106)
-      )
-   )
-(CHARACTER O 107
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 107)
-      )
-   )
-(CHARACTER O 110
-   (CHARWD R 0.472223)
-   (CHARDP R 1.111122)
-   (CHARIC R 0.194446)
-   (NEXTLARGER O 111)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 110)
-      )
-   )
-(CHARACTER O 111
-   (CHARWD R 0.555557)
-   (CHARDP R 2.222246)
-   (CHARIC R 0.444446)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 111)
-      )
-   )
-(CHARACTER O 112
-   (CHARWD R 1.1111145)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 113)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 112)
-      )
-   )
-(CHARACTER O 113
-   (CHARWD R 1.511116)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 113)
-      )
-   )
-(CHARACTER O 114
-   (CHARWD R 1.1111145)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 115)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 114)
-      )
-   )
-(CHARACTER O 115
-   (CHARWD R 1.511116)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 115)
-      )
-   )
-(CHARACTER O 116
-   (CHARWD R 1.1111145)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 117)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 116)
-      )
-   )
-(CHARACTER O 117
-   (CHARWD R 1.511116)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 117)
-      )
-   )
-(CHARACTER O 120
-   (CHARWD R 1.055559)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 130)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 120)
-      )
-   )
-(CHARACTER O 121
-   (CHARWD R 0.9444475)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 131)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 121)
-      )
-   )
-(CHARACTER O 122
-   (CHARWD R 0.472223)
-   (CHARDP R 1.111122)
-   (CHARIC R 0.194446)
-   (NEXTLARGER O 132)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 122)
-      )
-   )
-(CHARACTER O 123
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 133)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 123)
-      )
-   )
-(CHARACTER O 124
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 134)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 124)
-      )
-   )
-(CHARACTER O 125
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 135)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 125)
-      )
-   )
-(CHARACTER O 126
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 136)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 126)
-      )
-   )
-(CHARACTER O 127
-   (CHARWD R 0.833336)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 137)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 127)
-      )
-   )
-(CHARACTER O 130
-   (CHARWD R 1.444448)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 130)
-      )
-   )
-(CHARACTER O 131
-   (CHARWD R 1.2777815)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 131)
-      )
-   )
-(CHARACTER O 132
-   (CHARWD R 0.555557)
-   (CHARDP R 2.222246)
-   (CHARIC R 0.444446)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 132)
-      )
-   )
-(CHARACTER O 133
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 133)
-      )
-   )
-(CHARACTER O 134
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 134)
-      )
-   )
-(CHARACTER O 135
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 135)
-      )
-   )
-(CHARACTER O 136
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 136)
-      )
-   )
-(CHARACTER O 137
-   (CHARWD R 1.1111145)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 137)
-      )
-   )
-(CHARACTER O 140
-   (CHARWD R 0.9444475)
-   (CHARDP R 1.000013)
-   (NEXTLARGER O 141)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 140)
-      )
-   )
-(CHARACTER O 141
-   (CHARWD R 1.2777815)
-   (CHARHT R 0.100001)
-   (CHARDP R 1.500012)
-   (MAP
-      (SELECTFONT D 0)
-      (SETCHAR O 141)
-      )
-   )
+% RZ removed Oct 106--141 big operators
+%(CHARACTER O 106
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 107)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 106)
+%      )
+%   )
+%(CHARACTER O 107
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 107)
+%      )
+%   )
+%(CHARACTER O 110
+%   (CHARWD R 0.472223)
+%   (CHARDP R 1.111122)
+%   (CHARIC R 0.194446)
+%   (NEXTLARGER O 111)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 110)
+%      )
+%   )
+%(CHARACTER O 111
+%   (CHARWD R 0.555557)
+%   (CHARDP R 2.222246)
+%   (CHARIC R 0.444446)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 111)
+%      )
+%   )
+%(CHARACTER O 112
+%   (CHARWD R 1.1111145)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 113)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 112)
+%      )
+%   )
+%(CHARACTER O 113
+%   (CHARWD R 1.511116)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 113)
+%      )
+%   )
+%(CHARACTER O 114
+%   (CHARWD R 1.1111145)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 115)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 114)
+%      )
+%   )
+%(CHARACTER O 115
+%   (CHARWD R 1.511116)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 115)
+%      )
+%   )
+%(CHARACTER O 116
+%   (CHARWD R 1.1111145)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 117)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 116)
+%      )
+%   )
+%(CHARACTER O 117
+%   (CHARWD R 1.511116)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 117)
+%      )
+%   )
+%(CHARACTER O 120
+%   (CHARWD R 1.055559)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 130)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 120)
+%      )
+%   )
+%(CHARACTER O 121
+%   (CHARWD R 0.9444475)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 131)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 121)
+%      )
+%   )
+%(CHARACTER O 122
+%   (CHARWD R 0.472223)
+%   (CHARDP R 1.111122)
+%   (CHARIC R 0.194446)
+%   (NEXTLARGER O 132)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 122)
+%      )
+%   )
+%(CHARACTER O 123
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 133)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 123)
+%      )
+%   )
+%(CHARACTER O 124
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 134)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 124)
+%      )
+%   )
+%(CHARACTER O 125
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 135)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 125)
+%      )
+%   )
+%(CHARACTER O 126
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 136)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 126)
+%      )
+%   )
+%(CHARACTER O 127
+%   (CHARWD R 0.833336)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 137)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 127)
+%      )
+%   )
+%(CHARACTER O 130
+%   (CHARWD R 1.444448)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 130)
+%      )
+%   )
+%(CHARACTER O 131
+%   (CHARWD R 1.2777815)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 131)
+%      )
+%   )
+%(CHARACTER O 132
+%   (CHARWD R 0.555557)
+%   (CHARDP R 2.222246)
+%   (CHARIC R 0.444446)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 132)
+%      )
+%   )
+%(CHARACTER O 133
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 133)
+%      )
+%   )
+%(CHARACTER O 134
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 134)
+%      )
+%   )
+%(CHARACTER O 135
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 135)
+%      )
+%   )
+%(CHARACTER O 136
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 136)
+%      )
+%   )
+%(CHARACTER O 137
+%   (CHARWD R 1.1111145)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 137)
+%      )
+%   )
+%(CHARACTER O 140
+%   (CHARWD R 0.9444475)
+%   (CHARDP R 1.000013)
+%   (NEXTLARGER O 141)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 140)
+%      )
+%   )
+%(CHARACTER O 141
+%   (CHARWD R 1.2777815)
+%   (CHARHT R 0.100001)
+%   (CHARDP R 1.500012)
+%   (MAP
+%      (SELECTFONT D 0)
+%      (SETCHAR O 141)
+%      )
+%   )
 (CHARACTER O 142
    (CHARWD R 0.555557)
    (CHARHT R 0.722223)
@@ -3160,7 +3172,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 164
    (CHARWD R 1.055559)
-   (CHARDP R 1.800018)
+   (CHARHT R 0.039999)
+   (CHARDP R 1.760019)
    (VARCHAR
       (TOP O 166)
       (BOT O 164)
@@ -3173,7 +3186,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 165
    (CHARWD R 1.055559)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (MAP
       (SELECTFONT D 0)
       (SETCHAR O 165)
@@ -3190,7 +3204,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 167
    (CHARWD R 0.777781)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 176)
       (BOT O 177)
@@ -3203,7 +3218,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 170
    (CHARWD R 0.666669)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 170)
       (REP O 77)
@@ -3215,7 +3231,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 171
    (CHARWD R 0.666669)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (BOT O 171)
       (REP O 77)
@@ -3259,7 +3276,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 176
    (CHARWD R 0.777781)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (TOP O 176)
       (REP O 167)
@@ -3271,7 +3289,8 @@ yrcmex10 Yhcmex <yhcmex.pfb
    )
 (CHARACTER O 177
    (CHARWD R 0.777781)
-   (CHARDP R 0.600006)
+   (CHARHT R 0.039999)
+   (CHARDP R 0.560007)
    (VARCHAR
       (BOT O 177)
       (REP O 167)
