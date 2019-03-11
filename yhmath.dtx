@@ -330,18 +330,6 @@
 \RequirePackage{amsmath}
 %    \end{macrocode}
 %
-% |\widering| is also defined in other packages (fourier, newtx, newpx etc)
-% but they do the definition in AtBeginDocument without checking for the
-% existence, so loading this package (yhmath) with others defining 
-% widering will create problems - use option nowidering to undef it.
-% First define the macro, and clear it if the respective package
-% option is given. Here is a (clumsy) definition of |\widering|, that is
-% a ring over an horizontal parenthesis.
-%    \begin{macrocode}
-\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
-\displaystyle\ring{}$}}}{\wideparen{#1}}}
-%    \end{macrocode}
-%
 % \subsection{Option handling}
 %
 % Three options are supported: |minimal| which defines only those
@@ -351,6 +339,8 @@
 %
 %    \begin{macrocode}
 \newif\if@yh@full
+\newif\if@yh@nowidering
+\@yh@nowideringfalse
 \DeclareOption{minimal}{%
   \@yh@fullfalse%
 }%
@@ -358,7 +348,7 @@
   \@yh@fulltrue%
 }%
 \DeclareOption{nowidering}{%
-  \let\widering\@undefined%
+  \@yh@nowideringtrue%
 }
 %    \end{macrocode}
 %
@@ -462,6 +452,20 @@
      {\mathord}{yhlargesymbols}{"3E}{yhlargesymbols}{"3E}
 \fi
 %    \end{macrocode}
+%
+% |\widering| is also defined in other packages (fourier, newtx, newpx etc)
+% but they do the definition in AtBeginDocument without checking for the
+% existence, so loading this package (yhmath) with others defining 
+% widering will create problems - use option nowidering to undef it.
+% Here is a (clumsy) definition of |\widering|, that is a ring over an
+% horizontal parenthesis.
+%    \begin{macrocode}
+\if@yh@nowidering\else
+\newcommand{\widering}[1]{\overset{\smash{\lower1.333ex\hbox{$%
+\displaystyle\ring{}$}}}{\wideparen{#1}}}%
+\fi
+%    \end{macrocode}
+%
 %
 % The |amatrix| environment is defined
 %    \begin{macrocode}
