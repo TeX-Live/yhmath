@@ -33,14 +33,14 @@
 %
 % \GetFileInfo{yhmath.dtx}
 %
-% \def\fileversion{1.5}
-% \def\filedate{2019/02/24}
+% \def\fileversion{1.6}
+% \def\filedate{2020/03/17}
 %
 % \title{My humble additions to (La)\TeX{} mathematics\thanks{This file is
 %          \fileversion, last revised \filedate.}}
 % \author{Yannis Haralambous, Norbert Preining\\
 %           \texttt{\small yannis1962@gmail.com}, \texttt{\small norbert@preining.info}}
-% \date{January 4, 1996 (YH); February 24, 2019 (NP)}
+% \date{January 4, 1996 (YH); March 17, 2020 (NP)}
 % \maketitle
 %
 % \CheckSum{107}
@@ -51,6 +51,7 @@
 % \changes{v1.3}{2018/01/31}{Add license statements (NP)}
 % \changes{v1.4}{2019/02/18}{Package options, dates, backward compatibility (NP)}
 % \changes{v1.5}{2019/02/24}{Fixes to math delimiters, make font extensible (NP)}
+% \changes{v1.6}{2020/03/17}{Fix to the widering definition (NP)}
 %
 % \begin{abstract}
 % This package provides a set of big delimiters, intermediate to those
@@ -74,6 +75,12 @@
 %
 % \section{Changes}
 %
+% \subsection{Version v1.6}
+%
+% Fixes definition order of widering to make yhmath compatible with
+% other packages defining widering (GH Issue 4).
+%
+% 
 % \subsection{Version v1.5}
 %
 % Fixes for the math delimiters $<$, $>$, and $/$ where incorporated,
